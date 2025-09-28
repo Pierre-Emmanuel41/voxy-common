@@ -7,37 +7,37 @@ import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 
 public class AddRoomWrapper implements IWrapper {
 
-    @Override
-    public byte[] getBytes(Object payload) {
-        if (!(payload instanceof AddRoomRequest))
-            return null;
+	@Override
+	public byte[] getBytes(Object payload) {
+		if (!(payload instanceof AddRoomRequest))
+			return null;
 
-        AddRoomRequest request = (AddRoomRequest) payload;
+		AddRoomRequest request = (AddRoomRequest) payload;
 
-        ByteWrapper wrapper = ByteWrapper.create();
+		ByteWrapper wrapper = ByteWrapper.create();
 
-        // Name's length + room's name
-        wrapper.putString(request.getName(), true);
+		// Name's length + room's name
+		wrapper.putString(request.getName(), true);
 
-        // Room's port number
-        wrapper.putInt(request.getPort());
+		// Room's port number
+		wrapper.putInt(request.getPort());
 
-        return wrapper.get();
-    }
+		return wrapper.get();
+	}
 
-    @Override
-    public Object parse(byte[] bytes) {
-        ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(bytes);
+	@Override
+	public Object parse(byte[] bytes) {
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(bytes);
 
-        // Name's length
-        int length = wrapper.nextInt();
+		// Name's length
+		int length = wrapper.nextInt();
 
-        // Room's name
-        String name = wrapper.nextString(length);
+		// Room's name
+		String name = wrapper.nextString(length);
 
-        // Room's port number
-        int port = wrapper.nextInt();
+		// Room's port number
+		int port = wrapper.nextInt();
 
-        return new AddRoomRequest(name, port);
-    }
+		return new AddRoomRequest(name, port);
+	}
 }
