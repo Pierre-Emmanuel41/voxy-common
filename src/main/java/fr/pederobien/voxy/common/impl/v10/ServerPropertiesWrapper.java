@@ -13,7 +13,7 @@ public class ServerPropertiesWrapper implements IWrapper {
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof ServerPropertiesRequest))
-			throw new IllegalArgumentException("The payload data type shall be ServerPropertiesRequest");
+			throw new IllegalArgumentException("[ServerPropertiesWrapper] - The payload data type shall be ServerPropertiesRequest");
 
 		ServerPropertiesRequest request = (ServerPropertiesRequest) payload;
 

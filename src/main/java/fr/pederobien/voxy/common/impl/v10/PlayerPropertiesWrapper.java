@@ -10,7 +10,7 @@ public class PlayerPropertiesWrapper implements IWrapper {
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof PlayerPropertiesRequest))
-			throw new IllegalArgumentException("The payload data type shall be PlayerPropertiesRequest");
+			throw new IllegalArgumentException("[PlayerPropertiesWrapper] - The payload data type shall be PlayerPropertiesRequest");
 
 		PlayerPropertiesRequest request = (PlayerPropertiesRequest) payload;
 

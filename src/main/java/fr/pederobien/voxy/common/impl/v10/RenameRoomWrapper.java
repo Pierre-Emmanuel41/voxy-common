@@ -10,7 +10,7 @@ public class RenameRoomWrapper implements IWrapper {
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof RenameRoomRequest))
-			throw new IllegalArgumentException("The payload data type shall be RenameRoomRequest");
+			throw new IllegalArgumentException("[RenameRoomWrapper] - The payload data type shall be RenameRoomRequest");
 
 		RenameRoomRequest request = (RenameRoomRequest) payload;
 
