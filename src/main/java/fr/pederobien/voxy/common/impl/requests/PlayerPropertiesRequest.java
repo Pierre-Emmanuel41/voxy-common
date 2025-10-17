@@ -64,11 +64,26 @@ public class PlayerPropertiesRequest {
 	@Override
 	public String toString() {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
-		if (!isGetMode()) {
+		if (isGetMode())
+			joiner.add("GetMode - no payload");
+		else {
 			joiner.add("name=" + getName());
 			joiner.add("isMute=" + isMute());
 			joiner.add("isDeaf=" + isDeaf());
 		}
 		return joiner.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof PlayerPropertiesRequest))
+			return false;
+
+		PlayerPropertiesRequest other = (PlayerPropertiesRequest) obj;
+
+		if (getMode != other.getMode)
+			return false;
+
+		return getMode || (name.equals(other.getName()) && isMute == other.isMute() && isDeaf == other.isDeaf());
 	}
 }

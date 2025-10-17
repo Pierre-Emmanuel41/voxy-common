@@ -38,4 +38,13 @@ public class RenameRoomRequest {
 		joiner.add("newName=" + getNewName());
 		return joiner.toString();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof RenameRoomRequest))
+			return false;
+
+		RenameRoomRequest other = (RenameRoomRequest) obj;
+		return oldName.equals(other.getOldName()) && newName.equals(other.getNewName());
+	}
 }

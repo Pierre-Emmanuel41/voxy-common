@@ -38,4 +38,13 @@ public class AddRoomRequest {
 		joiner.add("port=" + getPort());
 		return joiner.toString();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof AddRoomRequest))
+			return false;
+
+		AddRoomRequest other = (AddRoomRequest) obj;
+		return name.equals(other.getName()) && port == other.getPort();
+	}
 }

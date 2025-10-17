@@ -27,4 +27,13 @@ public class RemoveRoomRequest {
 		joiner.add("name=" + getName());
 		return joiner.toString();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof RemoveRoomRequest))
+			return false;
+
+		RemoveRoomRequest other = (RemoveRoomRequest) obj;
+		return name.equals(other.getName());
+	}
 }
