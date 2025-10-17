@@ -20,5 +20,6 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.REMOVE_ROOM, new RemoveRoomWrapper());
 		protocol.register(VoxyIdentifiers.RENAME_ROOM, new RenameRoomWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_PROPERTIES, new PlayerPropertiesWrapper());
+		protocol.register(VoxyIdentifiers.SERVER_PROPERTIES, new ServerPropertiesWrapper());
 	}
 }

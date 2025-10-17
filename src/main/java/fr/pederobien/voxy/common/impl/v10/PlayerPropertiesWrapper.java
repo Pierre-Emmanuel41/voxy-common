@@ -10,13 +10,13 @@ public class PlayerPropertiesWrapper implements IWrapper {
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof PlayerPropertiesRequest))
-			return null;
+			throw new IllegalArgumentException("The payload data type shall be PlayerPropertiesRequest");
 
 		PlayerPropertiesRequest request = (PlayerPropertiesRequest) payload;
 
 		ByteWrapper wrapper = ByteWrapper.create();
 		if (request.isGetMode())
-			return new byte[0];
+			return wrapper.get();
 
 		// Name's length + player's name
 		wrapper.putString(request.getName(), true);

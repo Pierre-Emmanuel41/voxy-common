@@ -1,22 +1,25 @@
 package fr.pederobien.voxy.common.impl.v10;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.pederobien.protocol.interfaces.IWrapper;
 import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.voxy.common.impl.requests.ServerPropertiesRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ServerPropertiesWrapper implements IWrapper {
 
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof ServerPropertiesRequest))
-			return null;
+			throw new IllegalArgumentException("The payload data type shall be ServerPropertiesRequest");
 
 		ServerPropertiesRequest request = (ServerPropertiesRequest) payload;
+
 		ByteWrapper wrapper = ByteWrapper.create();
+		if (request.isGetMode())
+			return wrapper.get();
 
 		// Number of rooms
 		wrapper.putInt(request.getRooms().size());
@@ -52,6 +55,9 @@ public class ServerPropertiesWrapper implements IWrapper {
 
 	@Override
 	public Object parse(byte[] bytes) {
+		if (bytes.length == 0)
+			return new ServerPropertiesRequest();
+
 		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(bytes);
 
 		// Number of rooms

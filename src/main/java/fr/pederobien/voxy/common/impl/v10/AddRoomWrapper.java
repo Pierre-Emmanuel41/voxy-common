@@ -10,7 +10,7 @@ public class AddRoomWrapper implements IWrapper {
 	@Override
 	public byte[] getBytes(Object payload) {
 		if (!(payload instanceof AddRoomRequest))
-			return null;
+			throw new IllegalArgumentException("The payload data type shall be AddRoomRequest");
 
 		AddRoomRequest request = (AddRoomRequest) payload;
 
