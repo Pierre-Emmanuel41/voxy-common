@@ -30,6 +30,8 @@ public class VoxyProtocolManagerTestApp {
 		test.setServerPropertiesOneRoomTwoPlayersTest();
 		test.setServerPropertiesTwoRoomsTwoPlayersTest();
 		test.serverPropertiesWrongDatatypeTest();
+		test.joinRoomRequestTest();
+		test.joinRoomRequestWrongDataTypeTest();
 	}
 
 	private static void runTest(String testName, IExecutable test) {
