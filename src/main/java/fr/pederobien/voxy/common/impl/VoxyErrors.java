@@ -16,7 +16,12 @@ public enum VoxyErrors implements IError {
 	/**
 	 * Error code to indicate that a room is already registered for a specific name.
 	 */
-	ROOM_ALREADY_REGISTERED(2, "A room is already registered");
+	ROOM_ALREADY_REGISTERED(2, "A room is already registered"),
+
+	/**
+	 * Error code to indicate that a room does not exist.
+	 */
+	ROOM_DOES_NOT_EXIST(3, "The room does not exist");
 
 	private int code;
 	private String message;
