@@ -4,6 +4,11 @@ import fr.pederobien.protocol.interfaces.IIdentifier;
 
 public enum VoxyIdentifiers implements IIdentifier {
 	/**
+	 * Identifier to acknowledge a response.
+	 */
+	ACKOWLEDGEMENT(0, "Identifier used to acknowledge a response"),
+
+	/**
 	 * Identifier to add a room on a server.
 	 */
 	ADD_ROOM(1, "Adds a room on a server"),

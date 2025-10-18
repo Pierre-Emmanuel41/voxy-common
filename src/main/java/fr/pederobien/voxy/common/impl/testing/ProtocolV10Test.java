@@ -34,6 +34,31 @@ public class ProtocolV10Test {
 		runTest("checkVersion10Exist", test);
 	}
 
+	public void acknowledgementTest() {
+		IExecutable test = () -> {
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, null);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to acknowledge a response");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to acknowledge a response");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.equals(request)) {
+				Logger.error("Failure to acknowledge a response");
+				return;
+			}
+
+			Logger.info("Acknowledge response supported successfully");
+		};
+
+		runTest("acknowledgementTest", test);
+	}
+
 	public void addRoomRequestTest() {
 		IExecutable test = () -> {
 			AddRoomRequest payload = new AddRoomRequest("general", 12345);

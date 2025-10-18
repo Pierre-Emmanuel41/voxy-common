@@ -16,6 +16,7 @@ public class ProtocolV10 {
 			throw new IllegalArgumentException(String.format("The protocol version shall be 1.0 instead of %s", version));
 
 		// Registering requests for this protocol
+		protocol.register(VoxyIdentifiers.ACKOWLEDGEMENT, new AcknowledgementWrapper());
 		protocol.register(VoxyIdentifiers.ADD_ROOM, new AddRoomWrapper());
 		protocol.register(VoxyIdentifiers.REMOVE_ROOM, new RemoveRoomWrapper());
 		protocol.register(VoxyIdentifiers.RENAME_ROOM, new RenameRoomWrapper());

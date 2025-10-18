@@ -11,7 +11,12 @@ public enum VoxyErrors implements IError {
 	/**
 	 * Error code to indicate that a player with a specific name already exists on the server.
 	 */
-	PLAYER_ALREADY_EXIST(1, "A player with the given name already exists");
+	PLAYER_ALREADY_EXIST(1, "A player with the given name already exists"),
+
+	/**
+	 * Error code to indicate that a room is already registered for a specific name.
+	 */
+	ROOM_ALREADY_REGISTERED(2, "A room is already registered");
 
 	private int code;
 	private String message;

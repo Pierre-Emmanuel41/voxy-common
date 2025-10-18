@@ -15,6 +15,7 @@ public class VoxyProtocolManagerTestApp {
 		ProtocolV10Test test = new ProtocolV10Test();
 
 		test.checkVersion10Exist();
+		test.acknowledgementTest();
 		test.addRoomRequestTest();
 		test.addRoomRequestWrongPayloadDatatypeTest();
 		test.removeRoomRequestTest();
