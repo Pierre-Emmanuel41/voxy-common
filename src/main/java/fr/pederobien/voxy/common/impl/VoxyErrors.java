@@ -36,7 +36,12 @@ public enum VoxyErrors implements IError {
 	/**
 	 * Error code to indicate that a player with the same name is already registered in a room.
 	 */
-	PLAYER_ALREADY_REGISTERED(6, "The player is already registered in a room");
+	PLAYER_ALREADY_REGISTERED(6, "The player is already registered in a room"),
+
+	/**
+	 * Error code to indicate that a player is not registered in a room.
+	 */
+	PLAYER_NOT_REGISTERED(7, "The player is not registered in a room");
 
 	private int code;
 	private String message;
