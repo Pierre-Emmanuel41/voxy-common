@@ -32,6 +32,8 @@ public class VoxyProtocolManagerTestApp {
 		test.serverPropertiesWrongDatatypeTest();
 		test.joinRoomRequestTest();
 		test.joinRoomRequestWrongDataTypeTest();
+		test.leaveRoomRequestTest();
+		test.leaveRoomRequestWrongDataTypeTest();
 	}
 
 	private static void runTest(String testName, IExecutable test) {

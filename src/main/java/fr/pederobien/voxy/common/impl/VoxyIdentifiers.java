@@ -37,7 +37,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to join a room to speak with other players.
 	 */
-	JOIN_ROOM(6, "Join a room");
+	JOIN_ROOM(6, "Join a room"),
+
+	/**
+	 * Identifier to leave a room.
+	 */
+	LEAVE_ROOM(7, "Leave a room");
 
 	private int code;
 	private String message;

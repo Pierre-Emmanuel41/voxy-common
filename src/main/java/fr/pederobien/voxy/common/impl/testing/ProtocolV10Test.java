@@ -12,6 +12,7 @@ import fr.pederobien.voxy.common.impl.VoxyIdentifiers;
 import fr.pederobien.voxy.common.impl.VoxyProtocolManager;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
+import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerPropertiesRequest;
 import fr.pederobien.voxy.common.impl.requests.RemoveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.RenameRoomRequest;
@@ -444,6 +445,50 @@ public class ProtocolV10Test {
 					Logger.error("JoinRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("JoinRoomWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("joinRoomRequestWrongDataTypeTest", test);
+	}
+
+	public void leaveRoomRequestTest() {
+		IExecutable test = () -> {
+			LeaveRoomRequest payload = new LeaveRoomRequest("general", "player");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.LEAVE_ROOM, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to leave a room");
+				return;
+			}
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("LeaveRoomRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("leaveRoomRequestTest", test);
+	}
+
+	public void leaveRoomRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			AddRoomRequest payload = new AddRoomRequest("general", 12345);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.LEAVE_ROOM, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("LeaveRoomWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("LeaveRoomWrapper threw an expected Exception: %s", e.getMessage());
 				}
 			}
 		};
