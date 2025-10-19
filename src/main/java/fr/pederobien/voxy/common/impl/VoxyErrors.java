@@ -6,48 +6,54 @@ public enum VoxyErrors implements IError {
 	/**
 	 * Error code corresponding to no error.
 	 */
-	NO_ERROR(0, "No Error"),
+	NO_ERROR("No Error"),
 
 	/**
 	 * Error code to indicate that a player with a specific name already exists on the server.
 	 */
-	PLAYER_ALREADY_EXIST(1, "A player with the given name already exists"),
+	PLAYER_ALREADY_EXIST("A player with the given name already exists"),
 
 	/**
 	 * Error code to indicate that no player with the given name exists.
 	 */
-	PLAYER_DOES_NOT_EXIST(2, "There no player registered with the given name"),
-
-	/**
-	 * Error code to indicate that a room is already registered for a specific name.
-	 */
-	ROOM_ALREADY_REGISTERED(3, "A room is already registered"),
-
-	/**
-	 * Error code to indicate that a room does not exist.
-	 */
-	ROOM_DOES_NOT_EXIST(4, "The room does not exist"),
+	PLAYER_DOES_NOT_EXIST("There no player registered with the given name"),
 
 	/**
 	 * Error code to indicate that the player's name is incorrect.
 	 */
-	PLAYER_NAME_INCORRECT(5, "The player's name is incorrect"),
+	PLAYER_NAME_INCORRECT("The player's name is incorrect"),
 
 	/**
 	 * Error code to indicate that a player with the same name is already registered in a room.
 	 */
-	PLAYER_ALREADY_REGISTERED(6, "The player is already registered in a room"),
+	PLAYER_ALREADY_REGISTERED("The player is already registered in a room"),
 
 	/**
 	 * Error code to indicate that a player is not registered in a room.
 	 */
-	PLAYER_NOT_REGISTERED(7, "The player is not registered in a room");
+	PLAYER_NOT_REGISTERED("The player is not registered in a room"),
 
+	/**
+	 * Error code to indicate that a room is already registered for a specific name.
+	 */
+	ROOM_ALREADY_REGISTERED("A room is already registered"),
+
+	/**
+	 * Error code to indicate that a room does not exist.
+	 */
+	ROOM_DOES_NOT_EXIST("The room does not exist");
+
+	private static int codeGenerator = 0;
 	private int code;
 	private String message;
 
-	VoxyErrors(int code, String message) {
-		this.code = code;
+	/**
+	 * Creates a error code shared between a voxy client and a voxy server.
+	 * 
+	 * @param message The message associated to the error.
+	 */
+	VoxyErrors(String message) {
+		this.code = generateCode();
 		this.message = message;
 	}
 
@@ -59,5 +65,12 @@ public enum VoxyErrors implements IError {
 	@Override
 	public String getMessage() {
 		return message;
+	}
+
+	/**
+	 * @return Increments the static code generator and returns the result.
+	 */
+	private int generateCode() {
+		return codeGenerator++;
 	}
 }
