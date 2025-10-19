@@ -21,6 +21,12 @@ public class JoinRoomWrapper implements IWrapper {
 		// Name's length + player's name
 		wrapper.putString(request.getPlayerName(), true);
 
+		// Player's mute status
+		wrapper.put((byte) (request.isMute() ? 1 : 0));
+
+		// Player's deaf status
+		wrapper.put((byte) (request.isDeaf() ? 1 : 0));
+
 		return wrapper.get();
 	}
 
@@ -40,7 +46,13 @@ public class JoinRoomWrapper implements IWrapper {
 		// Player's name
 		String playerName = wrapper.nextString(playerNameLength);
 
-		return new JoinRoomRequest(roomName, playerName);
+		// Player's mute status
+		boolean isMute = wrapper.next() == 1;
+
+		// Player's deaf status
+		boolean isDeaf = wrapper.next() == 1;
+
+		return new JoinRoomRequest(roomName, playerName, isMute, isDeaf);
 	}
 
 }

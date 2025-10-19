@@ -409,7 +409,7 @@ public class ProtocolV10Test {
 
 	public void joinRoomRequestTest() {
 		IExecutable test = () -> {
-			JoinRoomRequest payload = new JoinRoomRequest("general", "player");
+			JoinRoomRequest payload = new JoinRoomRequest("general", "player", true, true);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.JOIN_ROOM, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
