@@ -7,48 +7,54 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to acknowledge a response.
 	 */
-	ACKOWLEDGEMENT(0, "Identifier used to acknowledge a response"),
+	ACKOWLEDGEMENT("Identifier used to acknowledge a response"),
 
 	/**
 	 * Identifier to gather the player properties.
 	 */
-	PLAYER_PROPERTIES(1, "Gathers the player properties"),
+	PLAYER_PROPERTIES("Gathers the player properties"),
 
 	/**
 	 * Identifier to get the server's properties
 	 */
-	SERVER_PROPERTIES(2, "Gather server properties"),
+	SERVER_PROPERTIES("Gather server properties"),
 
 	/**
 	 * Identifier to add a room on a server.
 	 */
-	ADD_ROOM(3, "Adds a room on a server"),
+	ADD_ROOM("Adds a room on a server"),
 
 	/**
 	 * Identifier to remove a room from a server.
 	 */
-	REMOVE_ROOM(4, "Removes a room from a server"),
+	REMOVE_ROOM("Removes a room from a server"),
 
 	/**
 	 * Identifier to rename a room.
 	 */
-	RENAME_ROOM(5, "Renames a room"),
+	RENAME_ROOM("Renames a room"),
 
 	/**
 	 * Identifier to join a room to speak with other players.
 	 */
-	JOIN_ROOM(6, "Join a room"),
+	JOIN_ROOM("Join a room"),
 
 	/**
 	 * Identifier to leave a room.
 	 */
-	LEAVE_ROOM(7, "Leave a room");
+	LEAVE_ROOM("Leave a room");
 
+	private static int codeGenerator = 0;
 	private int code;
 	private String message;
 
-	VoxyIdentifiers(int code, String message) {
-		this.code = code;
+	/**
+	 * Creates a request identifier shared by a voxy client and a voxy server.
+	 * 
+	 * @param message The message associated to the identifier.
+	 */
+	VoxyIdentifiers(String message) {
+		this.code = generateCode();
 		this.message = message;
 	}
 
@@ -60,5 +66,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	@Override
 	public String getMessage() {
 		return message;
+	}
+
+	/**
+	 * @return Increments the static code generator and returns the result.
+	 */
+	private int generateCode() {
+		return codeGenerator++;
 	}
 }
