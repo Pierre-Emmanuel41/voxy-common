@@ -9,6 +9,11 @@ public enum VoxyErrors implements IError {
 	NO_ERROR("No Error"),
 
 	/**
+	 * Error code to indicate that a server plugin cancelled the request.
+	 */
+	CANCELLED("Operation cancelled by external source"),
+
+	/**
 	 * Error code to indicate that a player with a specific name already exists on the server.
 	 */
 	PLAYER_ALREADY_EXIST("A player with the given name already exists"),

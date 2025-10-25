@@ -6,7 +6,7 @@ import fr.pederobien.utils.event.Logger;
 public class VoxyProtocolManagerTestApp {
 
 	public static void main(String[] args) {
-		Logger.instance().newLine(true).timeStamp(true).colorized(true).debug(true);
+		Logger.instance().timeStamp(false).colorized(true).debug(true);
 
 		runTest("runProtocolV10Test", () -> runProtocolV10Test());
 	}
@@ -34,6 +34,12 @@ public class VoxyProtocolManagerTestApp {
 		test.joinRoomRequestWrongDataTypeTest();
 		test.leaveRoomRequestTest();
 		test.leaveRoomRequestWrongDataTypeTest();
+		test.playerMuteRequestTest();
+		test.playerMuteRequestWrongPayloadDatatypeTest();
+		test.playerMuteByRequestTest();
+		test.playerMuteByRequestWrongPayloadDatatypeTest();
+		test.playerDeafRequestTest();
+		test.playerDeafRequestWrongPayloadDatatypeTest();
 	}
 
 	private static void runTest(String testName, IExecutable test) {

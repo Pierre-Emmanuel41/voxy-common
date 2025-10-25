@@ -13,6 +13,9 @@ import fr.pederobien.voxy.common.impl.VoxyProtocolManager;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerMuteByRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerMuteRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerPropertiesRequest;
 import fr.pederobien.voxy.common.impl.requests.RemoveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.RenameRoomRequest;
@@ -493,7 +496,148 @@ public class ProtocolV10Test {
 			}
 		};
 
-		runTest("joinRoomRequestWrongDataTypeTest", test);
+		runTest("leaveRoomRequestWrongDataTypeTest", test);
+	}
+
+	public void playerMuteRequestTest() {
+		IExecutable test = () -> {
+			PlayerMuteRequest payload = new PlayerMuteRequest("Player 1", true);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_MUTE, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to mute/unmute a player");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to mute/unmute a player");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerMuteRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerMuteRequestTest", test);
+	}
+
+	public void playerMuteRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_MUTE, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("PlayerMuteWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerMuteWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerMuteRequestWrongPayloadDatatypeTest", test);
+	}
+
+	public void playerMuteByRequestTest() {
+		IExecutable test = () -> {
+			PlayerMuteByRequest payload = new PlayerMuteByRequest("Player 1", "Player 2", true);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_MUTE_BY, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to mute/unmute a player for another player");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to mute/unmute a player for another player");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("playerMuteByRequestTest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerMuteByRequestTest", test);
+	}
+
+	public void playerMuteByRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_MUTE_BY, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("PlayerMuteByWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerMuteByWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerMuteByRequestWrongPayloadDatatypeTest", test);
+	}
+
+	public void playerDeafRequestTest() {
+		IExecutable test = () -> {
+			PlayerDeafRequest payload = new PlayerDeafRequest("Player 1", true);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_DEAF, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to deaf/undeaf a player");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to deaf/undeaf a player");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerDeafRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerDeafRequestTest", test);
+	}
+
+	public void playerDeafRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_DEAF, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("PlayerDeafWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerDeafWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerDeafRequestWrongPayloadDatatypeTest", test);
 	}
 
 	private void runTest(String testName, IExecutable test) {

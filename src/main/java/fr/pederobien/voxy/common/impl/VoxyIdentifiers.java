@@ -42,7 +42,22 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to leave a room.
 	 */
-	LEAVE_ROOM("Leave a room");
+	LEAVE_ROOM("Leave a room"),
+
+	/**
+	 * Identifier to change the mute status of a player.
+	 */
+	PLAYER_MUTE("Change the player's mute status"),
+
+	/**
+	 * Identifier to change the mute status of a player regarding another player.
+	 */
+	PLAYER_MUTE_BY("Change the player's mute status for another player"),
+
+	/**
+	 * Identifier to change the deaf status of a player.
+	 */
+	PLAYER_DEAF("Change the player's deaf status");
 
 	private static int codeGenerator = 0;
 	private int code;
