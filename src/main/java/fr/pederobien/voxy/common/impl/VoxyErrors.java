@@ -21,7 +21,7 @@ public enum VoxyErrors implements IError {
 	/**
 	 * Error code to indicate that no player with the given name exists.
 	 */
-	PLAYER_DOES_NOT_EXIST("There no player registered with the given name"),
+	PLAYER_DOES_NOT_EXIST("There is no player registered with the given name"),
 
 	/**
 	 * Error code to indicate that the player's name is incorrect.
