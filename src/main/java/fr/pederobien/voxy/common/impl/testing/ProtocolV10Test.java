@@ -43,7 +43,7 @@ public class ProtocolV10Test {
 	public void acknowledgementTest() {
 		IExecutable test = () -> {
 			AcknowledgementRequest payload = new AcknowledgementRequest(VoxyIdentifiers.ADD_ROOM);
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKNOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
@@ -69,7 +69,7 @@ public class ProtocolV10Test {
 	public void acknowledgementWrongPayloadDatatypeTest() {
 		IExecutable test = () -> {
 			RemoveRoomRequest payload = new RemoveRoomRequest("general");
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKNOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request != null) {

@@ -7,7 +7,7 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to acknowledge a response.
 	 */
-	ACKOWLEDGEMENT("Identifier used to acknowledge a response"),
+	ACKNOWLEDGEMENT("Identifier used to acknowledge a response"),
 
 	/**
 	 * Identifier to gather the player properties.
