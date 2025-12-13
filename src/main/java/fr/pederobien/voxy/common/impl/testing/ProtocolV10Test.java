@@ -10,6 +10,7 @@ import fr.pederobien.utils.event.Logger;
 import fr.pederobien.voxy.common.impl.VoxyErrors;
 import fr.pederobien.voxy.common.impl.VoxyIdentifiers;
 import fr.pederobien.voxy.common.impl.VoxyProtocolManager;
+import fr.pederobien.voxy.common.impl.requests.AcknowledgementRequest;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
@@ -41,7 +42,8 @@ public class ProtocolV10Test {
 
 	public void acknowledgementTest() {
 		IExecutable test = () -> {
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, null);
+			AcknowledgementRequest payload = new AcknowledgementRequest(VoxyIdentifiers.ADD_ROOM);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
@@ -62,6 +64,27 @@ public class ProtocolV10Test {
 		};
 
 		runTest("acknowledgementTest", test);
+	}
+
+	public void acknowledgementWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.ACKOWLEDGEMENT, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("AddRoomWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("AddRoomWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("acknowledgementWrongPayloadDatatypeTest", test);
 	}
 
 	public void addRoomRequestTest() {
