@@ -39,6 +39,16 @@ public enum VoxyErrors implements IError {
 	PLAYER_NOT_REGISTERED("The player is not registered in a room"),
 
 	/**
+	 * Error code to indicate that a source player already muted the target player.
+	 */
+	PLAYER_ALREADY_MUTED("The source player already muted the target player"),
+
+	/**
+	 * Error code to indicate that a source player did not mute the target player.
+	 */
+	PLAYER_NOT_MUTED("The source player did not mute the target player"),
+
+	/**
 	 * Error code to indicate that a room is already registered for a specific name.
 	 */
 	ROOM_ALREADY_REGISTERED("A room is already registered"),
