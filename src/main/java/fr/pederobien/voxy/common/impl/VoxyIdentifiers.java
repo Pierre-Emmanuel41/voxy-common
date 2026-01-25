@@ -57,7 +57,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to change the deaf status of a player.
 	 */
-	PLAYER_DEAF("Change the player's deaf status");
+	PLAYER_DEAF("Change the player's deaf status"),
+
+	/**
+	 * Identifier that indicates that a player is speaking.
+	 */
+	PLAYER_SPEAK("Player's audio sample");
 
 	private static int codeGenerator = 0;
 	private int code;

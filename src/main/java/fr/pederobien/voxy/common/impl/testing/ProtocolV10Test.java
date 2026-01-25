@@ -18,6 +18,7 @@ import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteByRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerPropertiesRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerSpeakRequest;
 import fr.pederobien.voxy.common.impl.requests.RemoveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.RenameRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.ServerPropertiesRequest;
@@ -656,6 +657,53 @@ public class ProtocolV10Test {
 					Logger.error("PlayerDeafWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerDeafWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerDeafRequestWrongPayloadDatatypeTest", test);
+	}
+
+	public void playerSpeakRequestTest() {
+		IExecutable test = () -> {
+			PlayerSpeakRequest payload = new PlayerSpeakRequest("Player 1", new byte[15], (byte) 1, 1.5678f, 0.65432f, 0.45632f);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_SPEAK, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to send player's audio sample");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to send player's audio sample");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerSpeakRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerSpeakTest", test);
+	}
+
+	public void playerSpeakRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_SPEAK, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("PlayerSpeakWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerSpeakWrapper threw an expected Exception: %s", e.getMessage());
 				}
 			}
 		};

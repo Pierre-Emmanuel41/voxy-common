@@ -41,6 +41,8 @@ public class VoxyProtocolManagerTestApp {
 		test.playerMuteByRequestWrongPayloadDatatypeTest();
 		test.playerDeafRequestTest();
 		test.playerDeafRequestWrongPayloadDatatypeTest();
+		test.playerSpeakRequestTest();
+		test.playerSpeakRequestWrongPayloadDatatypeTest();
 	}
 
 	private static void runTest(String testName, IExecutable test) {
