@@ -18,6 +18,16 @@ public class AddRoomRequest {
 	}
 
 	/**
+	 * Creates a request to add a room on a server.
+	 *
+	 * @param name The name of the room to add.
+	 */
+	public AddRoomRequest(String name) {
+		this.name = name;
+		this.port = -1;
+	}
+
+	/**
 	 * @return The name of the room to add.
 	 */
 	public String getName() {
