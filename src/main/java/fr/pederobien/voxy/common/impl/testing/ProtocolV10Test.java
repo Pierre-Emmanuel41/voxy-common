@@ -14,11 +14,12 @@ import fr.pederobien.voxy.common.impl.requests.AcknowledgementRequest;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteByRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerPropertiesRequest;
-import fr.pederobien.voxy.common.impl.requests.PlayerSpeakRequest;
 import fr.pederobien.voxy.common.impl.requests.RemoveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.RenameRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.ServerPropertiesRequest;
@@ -664,10 +665,10 @@ public class ProtocolV10Test {
 		runTest("playerDeafRequestWrongPayloadDatatypeTest", test);
 	}
 
-	public void playerSpeakRequestTest() {
+	public void playerAudioStreamContentRequestTest() {
 		IExecutable test = () -> {
-			PlayerSpeakRequest payload = new PlayerSpeakRequest("Player 1", new byte[15], (byte) 1, 1.5678f, 0.65432f, 0.45632f);
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_SPEAK, VoxyErrors.NO_ERROR, payload);
+			PlayerAudioStreamContentRequest payload = new PlayerAudioStreamContentRequest("Player 1", new byte[15], (byte) 1);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CONTENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
@@ -687,13 +688,13 @@ public class ProtocolV10Test {
 			Logger.info("PlayerSpeakRequest bytes array generated and parsed successfully");
 		};
 
-		runTest("playerSpeakTest", test);
+		runTest("playerAudioStreamContentRequestTest", test);
 	}
 
-	public void playerSpeakRequestWrongPayloadDatatypeTest() {
+	public void playerAudioStreamContentRequestWrongPayloadDatatypeTest() {
 		IExecutable test = () -> {
 			RemoveRoomRequest payload = new RemoveRoomRequest("general");
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_SPEAK, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CONTENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request != null) {
@@ -708,7 +709,54 @@ public class ProtocolV10Test {
 			}
 		};
 
-		runTest("playerDeafRequestWrongPayloadDatatypeTest", test);
+		runTest("playerAudioStreamContentRequestWrongPayloadDatatypeTest", test);
+	}
+
+	public void playerAudioStreamVolumesRequestTest() {
+		IExecutable test = () -> {
+			PlayerAudioStreamVolumesRequest payload = new PlayerAudioStreamVolumesRequest("Player 1", 1.5678f, 0.65432f, 0.45632f);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_VOLUMES, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to send player's audio stream volumes");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to send player's audio stream volumes");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerAudioStreamVolumesRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerAudioStreamVolumesRequestTest", test);
+	}
+
+	public void playerAudioStreamVolumesRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_VOLUMES, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("PlayerAudioStreamVolumesWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerAudioStreamVolumesWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerAudioStreamVolumesRequestWrongPayloadDatatypeTest", test);
 	}
 
 	private void runTest(String testName, IExecutable test) {

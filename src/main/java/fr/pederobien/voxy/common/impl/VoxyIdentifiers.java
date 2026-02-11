@@ -62,7 +62,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier that indicates that a player is speaking.
 	 */
-	PLAYER_SPEAK("Player's audio sample");
+	PLAYER_AUDIO_STREAM_CONTENT("Player's audio stream content"),
+
+	/**
+	 * Identifier that indicates that the volumes of a player has changed.
+	 */
+	PLAYER_AUDIO_STREAM_VOLUMES("Player's audio stream volumes");
 
 	private static int codeGenerator = 0;
 	private int code;

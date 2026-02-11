@@ -3,29 +3,20 @@ package fr.pederobien.voxy.common.impl.v10;
 import fr.pederobien.protocol.interfaces.IWrapper;
 import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.utils.ReadableByteWrapper;
-import fr.pederobien.voxy.common.impl.requests.PlayerSpeakRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
 
-public class PlayerSpeakWrapper implements IWrapper {
+public class PlayerAudioStreamVolumesWrapper implements IWrapper {
 
 	@Override
 	public byte[] getBytes(Object payload) {
-		if (!(payload instanceof PlayerSpeakRequest))
-			throw new IllegalArgumentException("[PlayerSpeakWrapper] - The payload data type shall be PlayerSpeakRequest");
+		if (!(payload instanceof PlayerAudioStreamVolumesRequest))
+			throw new IllegalArgumentException("[PlayerAudioStreamVolumesWrapper] - The payload data type shall be PlayerAudioStreamVolumesRequest");
 
-		PlayerSpeakRequest request = (PlayerSpeakRequest) payload;
+		PlayerAudioStreamVolumesRequest request = (PlayerAudioStreamVolumesRequest) payload;
 		ByteWrapper wrapper = ByteWrapper.create();
 
 		// Name's length + player's name
 		wrapper.putString(request.getName(), true);
-
-		// Audio sample's size
-		wrapper.putInt(request.getSample().length);
-
-		// Audio sample's data
-		wrapper.put(request.getSample());
-
-		// Algorithm code
-		wrapper.put(request.getAlgorithm());
 
 		// Left side volume
 		wrapper.putFloat(request.getLeft());
@@ -49,15 +40,6 @@ public class PlayerSpeakWrapper implements IWrapper {
 		// Player's name
 		String name = wrapper.nextString(nameLength);
 
-		// Audio sample's size
-		int dataSize = wrapper.nextInt();
-
-		// Audio sample's data
-		byte[] sample = wrapper.next(dataSize);
-
-		// Algorithm code
-		byte algorithm = wrapper.next();
-
 		// Left side volume
 		float left = wrapper.nextFloat();
 
@@ -67,7 +49,6 @@ public class PlayerSpeakWrapper implements IWrapper {
 		// Global volume
 		float global = wrapper.nextFloat();
 
-		return new PlayerSpeakRequest(name, sample, algorithm, left, right, global);
+		return new PlayerAudioStreamVolumesRequest(name, left, right, global);
 	}
-
 }

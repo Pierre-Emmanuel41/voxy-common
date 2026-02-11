@@ -27,6 +27,7 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.PLAYER_MUTE, new PlayerMuteWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_MUTE_BY, new PlayerMuteByWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_DEAF, new PlayerDeafWrapper());
-		protocol.register(VoxyIdentifiers.PLAYER_SPEAK, new PlayerSpeakWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CONTENT, new PlayerAudioStreamContentWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_VOLUMES, new PlayerAudioStreamVolumesWrapper());
 	}
 }

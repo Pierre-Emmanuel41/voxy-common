@@ -20,7 +20,7 @@ public class AddRoomWrapper implements IWrapper {
 		wrapper.putString(request.getName(), true);
 
 		// Room's port number
-		wrapper.putShort((short) request.getPort());
+		wrapper.putInt(request.getPort());
 
 		return wrapper.get();
 	}
@@ -36,7 +36,7 @@ public class AddRoomWrapper implements IWrapper {
 		String name = wrapper.nextString(length);
 
 		// Room's port number
-		short port = wrapper.nextShort();
+		int port = wrapper.nextInt();
 
 		return new AddRoomRequest(name, port);
 	}
