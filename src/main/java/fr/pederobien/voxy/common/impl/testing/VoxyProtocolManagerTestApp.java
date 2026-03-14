@@ -31,6 +31,8 @@ public class VoxyProtocolManagerTestApp {
 		test.setServerPropertiesOneRoomTwoPlayersTest();
 		test.setServerPropertiesTwoRoomsTwoPlayersTest();
 		test.serverPropertiesWrongDatatypeTest();
+		test.joinRoomPendingRequestTest();
+		test.joinRoomPendingRequestWrongDataTypeTest();
 		test.joinRoomRequestTest();
 		test.joinRoomRequestWrongDataTypeTest();
 		test.leaveRoomRequestTest();

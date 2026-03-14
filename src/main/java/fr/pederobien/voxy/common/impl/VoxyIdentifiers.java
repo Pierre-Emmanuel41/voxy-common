@@ -35,6 +35,11 @@ public enum VoxyIdentifiers implements IIdentifier {
 	RENAME_ROOM("Renames a room"),
 
 	/**
+	 * Identifier to join the pending queue of a room.
+	 */
+	JOIN_ROOM_PENDING("Join the pending queue of a room"),
+
+	/**
 	 * Identifier to join a room to speak with other players.
 	 */
 	JOIN_ROOM("Join a room"),

@@ -22,6 +22,7 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.ADD_ROOM, new AddRoomWrapper());
 		protocol.register(VoxyIdentifiers.REMOVE_ROOM, new RemoveRoomWrapper());
 		protocol.register(VoxyIdentifiers.RENAME_ROOM, new RenameRoomWrapper());
+		protocol.register(VoxyIdentifiers.JOIN_ROOM_PENDING, new JoinRoomPendingWrapper());
 		protocol.register(VoxyIdentifiers.JOIN_ROOM, new JoinRoomWrapper());
 		protocol.register(VoxyIdentifiers.LEAVE_ROOM, new LeaveRoomWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_MUTE, new PlayerMuteWrapper());

@@ -12,6 +12,7 @@ import fr.pederobien.voxy.common.impl.VoxyIdentifiers;
 import fr.pederobien.voxy.common.impl.VoxyProtocolManager;
 import fr.pederobien.voxy.common.impl.requests.AcknowledgementRequest;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
+import fr.pederobien.voxy.common.impl.requests.JoinRoomPendingRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
@@ -434,6 +435,50 @@ public class ProtocolV10Test {
 		};
 
 		runTest("serverPropertiesWrongDatatypeTest", test);
+	}
+
+	public void joinRoomPendingRequestTest() {
+		IExecutable test = () -> {
+			JoinRoomPendingRequest payload = new JoinRoomPendingRequest("general", "player");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.JOIN_ROOM_PENDING, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to join the pending queue of a room");
+				return;
+			}
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("JoinRoomPendingRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("joinRoomPendingRequestTest", test);
+	}
+
+	public void joinRoomPendingRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			AddRoomRequest payload = new AddRoomRequest("general", 12345);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.JOIN_ROOM_PENDING, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyProtocolManager.instance().parse(request.getBytes());
+					Logger.error("JoinRoomPendingWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("JoinRoomPendingWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("joinRoomPendingRequestWrongDataTypeTest", test);
 	}
 
 	public void joinRoomRequestTest() {
