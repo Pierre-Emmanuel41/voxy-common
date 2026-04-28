@@ -1,9 +1,13 @@
 package fr.pederobien.voxy.common.impl.v10;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.pederobien.protocol.interfaces.IWrapper;
 import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest.VolumeInfo;
 
 public class PlayerAudioStreamVolumesWrapper implements IWrapper {
 
@@ -15,17 +19,23 @@ public class PlayerAudioStreamVolumesWrapper implements IWrapper {
 		PlayerAudioStreamVolumesRequest request = (PlayerAudioStreamVolumesRequest) payload;
 		ByteWrapper wrapper = ByteWrapper.create();
 
-		// Name's length + player's name
-		wrapper.putString(request.getName(), true);
+		// Number of volumes info
+		wrapper.putInt(request.getVolumes().size());
 
-		// Left side volume
-		wrapper.putFloat(request.getLeft());
+		for (VolumeInfo info : request.getVolumes()) {
 
-		// Right side volume
-		wrapper.putFloat(request.getRight());
+			// Name's length + player's name
+			wrapper.putString(info.getName(), true);
 
-		// Global volume
-		wrapper.putFloat(request.getGlobal());
+			// Left side volume
+			wrapper.putFloat(info.getLeft());
+
+			// Right side volume
+			wrapper.putFloat(info.getRight());
+
+			// Global volume
+			wrapper.putFloat(info.getGlobal());
+		}
 
 		return wrapper.get();
 	}
@@ -34,21 +44,31 @@ public class PlayerAudioStreamVolumesWrapper implements IWrapper {
 	public Object parse(byte[] data) {
 		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(data);
 
-		// Name's length
-		int nameLength = wrapper.nextInt();
+		// Number of volumes info
+		int size = wrapper.nextInt();
 
-		// Player's name
-		String name = wrapper.nextString(nameLength);
+		List<VolumeInfo> volumes = new ArrayList<VolumeInfo>();
 
-		// Left side volume
-		float left = wrapper.nextFloat();
+		for (int i = 0; i < size; i++) {
 
-		// Right side volume
-		float right = wrapper.nextFloat();
+			// Name's length
+			int nameLength = wrapper.nextInt();
 
-		// Global volume
-		float global = wrapper.nextFloat();
+			// Player's name
+			String name = wrapper.nextString(nameLength);
 
-		return new PlayerAudioStreamVolumesRequest(name, left, right, global);
+			// Left side volume
+			float left = wrapper.nextFloat();
+
+			// Right side volume
+			float right = wrapper.nextFloat();
+
+			// Global volume
+			float global = wrapper.nextFloat();
+
+			volumes.add(new VolumeInfo(name, left, right, global));
+		}
+
+		return new PlayerAudioStreamVolumesRequest(volumes);
 	}
 }

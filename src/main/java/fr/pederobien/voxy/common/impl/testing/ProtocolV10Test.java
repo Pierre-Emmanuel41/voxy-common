@@ -17,6 +17,7 @@ import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest.VolumeInfo;
 import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteByRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteRequest;
@@ -759,7 +760,9 @@ public class ProtocolV10Test {
 
 	public void playerAudioStreamVolumesRequestTest() {
 		IExecutable test = () -> {
-			PlayerAudioStreamVolumesRequest payload = new PlayerAudioStreamVolumesRequest("Player 1", 1.5678f, 0.65432f, 0.45632f);
+			List<VolumeInfo> volumes = new ArrayList<VolumeInfo>();
+			volumes.add(new VolumeInfo("Player 1", 1.5678f, 0.65432f, 0.45632f));
+			PlayerAudioStreamVolumesRequest payload = new PlayerAudioStreamVolumesRequest(volumes);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_VOLUMES, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
