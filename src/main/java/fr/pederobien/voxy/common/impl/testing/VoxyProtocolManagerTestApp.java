@@ -6,7 +6,8 @@ import fr.pederobien.utils.event.Logger;
 public class VoxyProtocolManagerTestApp {
 
 	public static void main(String[] args) {
-		Logger.instance().timeStamp(false).colorized(true).debug(true);
+		Logger.setPrintInColor(true);
+		Logger.setPrintTimeStamp(false);
 
 		runTest("runProtocolV10Test", () -> runProtocolV10Test());
 	}
