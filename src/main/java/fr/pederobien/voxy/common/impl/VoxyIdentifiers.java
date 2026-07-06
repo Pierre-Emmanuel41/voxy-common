@@ -72,7 +72,17 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier that indicates that the volumes of a player has changed.
 	 */
-	PLAYER_AUDIO_STREAM_VOLUMES("Player's audio stream volumes");
+	PLAYER_AUDIO_STREAM_VOLUMES("Player's audio stream volumes"),
+
+	/**
+	 * Identifier that indicates that an effect shall be applied on an audio stream.
+	 */
+	PLAYER_AUDIO_STREAM_EFFECT("Player's audio stream effect"),
+
+	/**
+	 * Identifier that indicates that the effect currently applied shall be updated.
+	 */
+	PLAYER_AUDIO_STREAM_EFFECT_UPDATE("Player's audio stream effect update");
 
 	private static int codeGenerator = 0;
 	private int code;

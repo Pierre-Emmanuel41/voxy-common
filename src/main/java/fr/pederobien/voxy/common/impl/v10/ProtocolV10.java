@@ -30,5 +30,7 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.PLAYER_DEAF, new PlayerDeafWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CONTENT, new PlayerAudioStreamContentWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_VOLUMES, new PlayerAudioStreamVolumesWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT, new PlayerAudioStreamEffectWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, new PlayerAudioStreamEffectWrapper());
 	}
 }

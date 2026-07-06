@@ -9,13 +9,16 @@ import fr.pederobien.utils.IExecutable;
 import fr.pederobien.utils.event.Logger;
 import fr.pederobien.voxy.common.impl.VoxyErrors;
 import fr.pederobien.voxy.common.impl.VoxyIdentifiers;
-import fr.pederobien.voxy.common.impl.VoxyProtocolManager;
+import fr.pederobien.voxy.common.impl.VoxyManagers;
+import fr.pederobien.voxy.common.impl.effects.EchoEffectDescription;
+import fr.pederobien.voxy.common.impl.effects.EffectDescription;
 import fr.pederobien.voxy.common.impl.requests.AcknowledgementRequest;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomPendingRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamEffectRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest.VolumeInfo;
 import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
@@ -58,7 +61,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to acknowledge a response");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.equals(request)) {
 				Logger.error("Failure to acknowledge a response");
 				return;
@@ -80,7 +83,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("AddRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("AddRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -105,7 +108,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to add a room");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -127,7 +130,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("AddRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("AddRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -152,7 +155,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to remove a room");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -173,7 +176,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("RemoveRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("RemoveRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -198,7 +201,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to rename a room");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -219,7 +222,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("RenameRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("RenameRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -244,7 +247,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to get player's properties");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -270,7 +273,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to set player's properties");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -291,7 +294,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerPropertiesWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerPropertiesWrapper threw an expected Exception: %s", e.getMessage());
@@ -314,7 +317,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -341,7 +344,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -371,7 +374,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -406,7 +409,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -427,7 +430,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("ServerPropertiesWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("ServerPropertiesWrapper threw an expected Exception: %s", e.getMessage());
@@ -450,7 +453,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -471,7 +474,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("JoinRoomPendingWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("JoinRoomPendingWrapper threw an expected Exception: %s", e.getMessage());
@@ -494,7 +497,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -515,7 +518,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("JoinRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("JoinRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -538,7 +541,7 @@ public class ProtocolV10Test {
 			}
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -559,7 +562,7 @@ public class ProtocolV10Test {
 			if (request != null) {
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("LeaveRoomWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("LeaveRoomWrapper threw an expected Exception: %s", e.getMessage());
@@ -584,7 +587,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to mute/unmute a player");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -606,7 +609,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerMuteWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerMuteWrapper threw an expected Exception: %s", e.getMessage());
@@ -631,7 +634,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to mute/unmute a player for another player");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -653,7 +656,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerMuteByWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerMuteByWrapper threw an expected Exception: %s", e.getMessage());
@@ -678,7 +681,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to deaf/undeaf a player");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -700,7 +703,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerDeafWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerDeafWrapper threw an expected Exception: %s", e.getMessage());
@@ -725,7 +728,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to send player's audio sample");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -747,7 +750,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerSpeakWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerSpeakWrapper threw an expected Exception: %s", e.getMessage());
@@ -774,7 +777,7 @@ public class ProtocolV10Test {
 			Logger.info("The protocol 1.0 supports the request to send player's audio stream volumes");
 
 			// Step 2: Verifying bytes generation
-			IRequest parsed = VoxyProtocolManager.instance().parse(request.getBytes());
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 			if (!parsed.getPayload().equals(payload)) {
 				Logger.error("Failure to parse the payload");
 				return;
@@ -796,7 +799,7 @@ public class ProtocolV10Test {
 
 				// Step 2: Verifying bytes generation
 				try {
-					VoxyProtocolManager.instance().parse(request.getBytes());
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
 					Logger.error("PlayerAudioStreamVolumesWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
 					Logger.info("PlayerAudioStreamVolumesWrapper threw an expected Exception: %s", e.getMessage());
@@ -805,6 +808,106 @@ public class ProtocolV10Test {
 		};
 
 		runTest("playerAudioStreamVolumesRequestWrongPayloadDatatypeTest", test);
+	}
+
+	public void playerAudioStreamEffectRequestTest() {
+		IExecutable test = () -> {
+			String effectName = EchoEffectDescription.NAME;
+			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
+			PlayerAudioStreamEffectRequest payload = new PlayerAudioStreamEffectRequest("Player 1", parameters);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to send player's audio stream effect");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to send player's audio stream effect");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerAudioStreamEffectRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerAudioStreamEffectRequestTest", test);
+	}
+
+	public void playerAudioStreamEffectRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+					Logger.error("PlayerAudioStreamEffectWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerAudioStreamEffectWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+
+		};
+
+		runTest("playerAudioStreamEffectRequestWrongDataTypeTest", test);
+	}
+
+	public void playerAudioStreamEffectUpdateRequestTest() {
+		IExecutable test = () -> {
+			String effectName = EchoEffectDescription.NAME;
+			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
+			PlayerAudioStreamEffectRequest payload = new PlayerAudioStreamEffectRequest("Player 1", parameters);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to send player's audio stream effect update");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to send player's audio stream effect update");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerAudioStreamEffectRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerAudioStreamEffectUpdateRequestTest", test);
+	}
+
+	public void playerAudioStreamEffectUpdateRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+					Logger.error("PlayerAudioStreamEffectWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerAudioStreamEffectWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+
+		};
+
+		runTest("playerAudioStreamEffectUpdateRequestWrongDataTypeTest", test);
 	}
 
 	private void runTest(String testName, IExecutable test) {
@@ -824,6 +927,6 @@ public class ProtocolV10Test {
 	 * @return The protocol associated to version 1.0.
 	 */
 	private IProtocol getProtocolV10() {
-		return VoxyProtocolManager.instance().getOrCreate(1.0f);
+		return VoxyManagers.instance().getProtocolManager().getOrCreate(1.0f);
 	}
 }
