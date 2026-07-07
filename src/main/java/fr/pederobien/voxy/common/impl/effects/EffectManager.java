@@ -43,8 +43,12 @@ public class EffectManager {
 			return null;
 
 		EffectDescription description = supplier.get();
-		description.setValues(values);
-		return description;
+		try {
+			description.setValues(values);
+			return description;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**
