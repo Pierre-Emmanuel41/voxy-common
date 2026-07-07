@@ -5,6 +5,7 @@ import fr.pederobien.protocol.interfaces.IProtocolManager;
 import fr.pederobien.voxy.common.impl.effects.EchoEffectDescription;
 import fr.pederobien.voxy.common.impl.effects.EffectDescription;
 import fr.pederobien.voxy.common.impl.effects.EffectManager;
+import fr.pederobien.voxy.common.impl.effects.NoEffectDescription;
 import fr.pederobien.voxy.common.impl.v10.ProtocolV10;
 
 public class VoxyManagers {
@@ -32,6 +33,7 @@ public class VoxyManagers {
 			ProtocolV10.update(INSTANCE.getProtocolManager().getOrCreate(1.0f));
 
 			// Adding native effects
+			INSTANCE.getEffectManager().register(NoEffectDescription.NAME, () -> new NoEffectDescription());
 			INSTANCE.getEffectManager().register(EchoEffectDescription.NAME, () -> new EchoEffectDescription());
 		}
 	}
