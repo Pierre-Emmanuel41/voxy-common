@@ -1,6 +1,7 @@
 package fr.pederobien.voxy.common.impl.effects;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -66,5 +67,12 @@ public class EffectManager {
 		EffectDescription p = supplier.get();
 		p.fromBytes(data);
 		return p;
+	}
+
+	/**
+	 * @return A list containing the name of each effect description registered for this manager.
+	 */
+	public List<String> getDescriptions() {
+		return descriptions.keySet().stream().toList();
 	}
 }
