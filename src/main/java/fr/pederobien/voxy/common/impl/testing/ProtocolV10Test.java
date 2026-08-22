@@ -916,7 +916,7 @@ public class ProtocolV10Test {
 			String effectName = EchoEffectDescription.NAME;
 			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
 			PlayerAudioStreamUpdateEffectRequest payload = new PlayerAudioStreamUpdateEffectRequest("Player 1", parameters);
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_UPDATE_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
@@ -942,7 +942,7 @@ public class ProtocolV10Test {
 	public void playerAudioStreamUpdateEffectRequestWrongDataTypeTest() {
 		IExecutable test = () -> {
 			RemoveRoomRequest payload = new RemoveRoomRequest("general");
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_UPDATE_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request != null) {
