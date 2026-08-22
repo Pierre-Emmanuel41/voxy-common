@@ -4,18 +4,21 @@ import java.util.StringJoiner;
 
 import fr.pederobien.voxy.common.impl.effects.EffectDescription;
 
-public class PlayerAudioStreamEffectRequest {
+public class PlayerAudioStreamAddEffectRequest {
 	private final String playerName;
+	private final byte index;
 	private final EffectDescription description;
 
 	/**
-	 * Creates a request in order to apply an effect on the audio stream of a player.
+	 * Creates a request in order to add an effect on the audio stream of a player.
 	 * 
 	 * @param playerName  The name of the player whose the audio stream shall be modified.
+	 * @param index       The index at which the effect shall be added.
 	 * @param description The description of the effect to apply.
 	 */
-	public PlayerAudioStreamEffectRequest(String playerName, EffectDescription description) {
+	public PlayerAudioStreamAddEffectRequest(String playerName, byte index, EffectDescription description) {
 		this.playerName = playerName;
+		this.index = index;
 		this.description = description;
 	}
 
@@ -24,6 +27,13 @@ public class PlayerAudioStreamEffectRequest {
 	 */
 	public String getPlayerName() {
 		return playerName;
+	}
+
+	/**
+	 * @return The index at which the effect shall be added.
+	 */
+	public byte getIndex() {
+		return index;
 	}
 
 	/**
@@ -37,18 +47,22 @@ public class PlayerAudioStreamEffectRequest {
 	public String toString() {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
 		joiner.add("playerName=" + getPlayerName());
+		joiner.add("index=" + getIndex());
 		joiner.add("description=" + getDescription());
 		return joiner.toString();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof PlayerAudioStreamEffectRequest))
+		if (!(obj instanceof PlayerAudioStreamAddEffectRequest))
 			return false;
 
-		PlayerAudioStreamEffectRequest other = (PlayerAudioStreamEffectRequest) obj;
+		PlayerAudioStreamAddEffectRequest other = (PlayerAudioStreamAddEffectRequest) obj;
 
 		if (!playerName.equals(other.getPlayerName()))
+			return false;
+
+		if (index != other.getIndex())
 			return false;
 
 		if (description == null && other.getDescription() == null)

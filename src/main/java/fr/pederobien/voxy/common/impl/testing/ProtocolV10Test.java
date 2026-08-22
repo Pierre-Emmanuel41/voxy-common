@@ -17,8 +17,10 @@ import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomPendingRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamAddEffectRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
-import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamEffectRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamRemoveEffectRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamUpdateEffectRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest.VolumeInfo;
 import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
@@ -810,20 +812,20 @@ public class ProtocolV10Test {
 		runTest("playerAudioStreamVolumesRequestWrongPayloadDatatypeTest", test);
 	}
 
-	public void playerAudioStreamEffectRequestTest() {
+	public void playerAudioStreamAddEffectRequestTest() {
 		IExecutable test = () -> {
 			String effectName = EchoEffectDescription.NAME;
 			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
-			PlayerAudioStreamEffectRequest payload = new PlayerAudioStreamEffectRequest("Player 1", parameters);
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT, VoxyErrors.NO_ERROR, payload);
+			PlayerAudioStreamAddEffectRequest payload = new PlayerAudioStreamAddEffectRequest("Player 1", (byte) 0, parameters);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_ADD_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
-				Logger.error("The protocol 1.0 shall support the request to send player's audio stream effect");
+				Logger.error("The protocol 1.0 shall support the request to add an effect on the audio stream of a player");
 				return;
 			}
 
-			Logger.info("The protocol 1.0 supports the request to send player's audio stream effect");
+			Logger.info("The protocol 1.0 supports the request to add an effect on the audio stream of a player");
 
 			// Step 2: Verifying bytes generation
 			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
@@ -832,16 +834,16 @@ public class ProtocolV10Test {
 				return;
 			}
 
-			Logger.info("PlayerAudioStreamEffectRequest bytes array generated and parsed successfully");
+			Logger.info("PlayerAudioStreamAddEffectRequest bytes array generated and parsed successfully");
 		};
 
-		runTest("playerAudioStreamEffectRequestTest", test);
+		runTest("playerAudioStreamAddEffectRequestTest", test);
 	}
 
-	public void playerAudioStreamEffectRequestWrongDataTypeTest() {
+	public void playerAudioStreamAddEffectRequestWrongDataTypeTest() {
 		IExecutable test = () -> {
 			RemoveRoomRequest payload = new RemoveRoomRequest("general");
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT, VoxyErrors.NO_ERROR, payload);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_ADD_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request != null) {
@@ -849,31 +851,30 @@ public class ProtocolV10Test {
 				// Step 2: Verifying bytes generation
 				try {
 					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
-					Logger.error("PlayerAudioStreamEffectWrapper did not throw the IllegalArgumentException");
+					Logger.error("PlayerAudioStreamAddEffectWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
-					Logger.info("PlayerAudioStreamEffectWrapper threw an expected Exception: %s", e.getMessage());
+					Logger.info("PlayerAudioStreamAddEffectWrapper threw an expected Exception: %s", e.getMessage());
 				}
 			}
 
 		};
 
-		runTest("playerAudioStreamEffectRequestWrongDataTypeTest", test);
+		runTest("playerAudioStreamAddEffectRequestWrongDataTypeTest", test);
 	}
 
-	public void playerAudioStreamEffectUpdateRequestTest() {
+	public void playerAudioStreamRemoveEffectRequestTest() {
 		IExecutable test = () -> {
 			String effectName = EchoEffectDescription.NAME;
-			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
-			PlayerAudioStreamEffectRequest payload = new PlayerAudioStreamEffectRequest("Player 1", parameters);
-			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+			PlayerAudioStreamRemoveEffectRequest payload = new PlayerAudioStreamRemoveEffectRequest("Player 1", effectName);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_REMOVE_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
 			if (request == null) {
-				Logger.error("The protocol 1.0 shall support the request to send player's audio stream effect update");
+				Logger.error("The protocol 1.0 shall support the request to remove an effect from the audio stream of a player");
 				return;
 			}
 
-			Logger.info("The protocol 1.0 supports the request to send player's audio stream effect update");
+			Logger.info("The protocol 1.0 supports the request to remove an effect from the audio stream of a player");
 
 			// Step 2: Verifying bytes generation
 			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
@@ -882,13 +883,63 @@ public class ProtocolV10Test {
 				return;
 			}
 
-			Logger.info("PlayerAudioStreamEffectRequest bytes array generated and parsed successfully");
+			Logger.info("PlayerAudioStreamRemoveEffectRequest bytes array generated and parsed successfully");
 		};
 
-		runTest("playerAudioStreamEffectUpdateRequestTest", test);
+		runTest("playerAudioStreamRemoveEffectRequestTest", test);
 	}
 
-	public void playerAudioStreamEffectUpdateRequestWrongDataTypeTest() {
+	public void playerAudioStreamRemoveEffectRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_REMOVE_EFFECT, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+					Logger.error("PlayerAudioStreamRemoveEffectWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerAudioStreamRemoveEffectWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+
+		};
+
+		runTest("playerAudioStreamRemoveEffectRequestWrongDataTypeTest", test);
+	}
+
+	public void playerAudioStreamUpdateEffectRequestTest() {
+		IExecutable test = () -> {
+			String effectName = EchoEffectDescription.NAME;
+			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
+			PlayerAudioStreamUpdateEffectRequest payload = new PlayerAudioStreamUpdateEffectRequest("Player 1", parameters);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to update the parameters of an effect");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to update the parameters of an effect");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerAudioStreamUpdateEffectRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerAudioStreamUpdateEffectRequestTest", test);
+	}
+
+	public void playerAudioStreamUpdateEffectRequestWrongDataTypeTest() {
 		IExecutable test = () -> {
 			RemoveRoomRequest payload = new RemoveRoomRequest("general");
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_EFFECT_UPDATE, VoxyErrors.NO_ERROR, payload);
@@ -899,15 +950,15 @@ public class ProtocolV10Test {
 				// Step 2: Verifying bytes generation
 				try {
 					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
-					Logger.error("PlayerAudioStreamEffectWrapper did not throw the IllegalArgumentException");
+					Logger.error("PlayerAudioStreamUpdateEffectWrapper did not throw the IllegalArgumentException");
 				} catch (Exception e) {
-					Logger.info("PlayerAudioStreamEffectWrapper threw an expected Exception: %s", e.getMessage());
+					Logger.info("PlayerAudioStreamUpdateEffectWrapper threw an expected Exception: %s", e.getMessage());
 				}
 			}
 
 		};
 
-		runTest("playerAudioStreamEffectUpdateRequestWrongDataTypeTest", test);
+		runTest("playerAudioStreamUpdateEffectRequestWrongDataTypeTest", test);
 	}
 
 	private void runTest(String testName, IExecutable test) {
