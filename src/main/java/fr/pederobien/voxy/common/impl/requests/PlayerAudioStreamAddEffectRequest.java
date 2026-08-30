@@ -2,24 +2,24 @@ package fr.pederobien.voxy.common.impl.requests;
 
 import java.util.StringJoiner;
 
-import fr.pederobien.voxy.common.impl.effects.EffectDescription;
+import fr.pederobien.voxy.common.impl.effects.Effect;
 
 public class PlayerAudioStreamAddEffectRequest {
 	private final String playerName;
 	private final byte index;
-	private final EffectDescription description;
+	private final Effect effect;
 
 	/**
 	 * Creates a request in order to add an effect on the audio stream of a player.
 	 * 
-	 * @param playerName  The name of the player whose the audio stream shall be modified.
-	 * @param index       The index at which the effect shall be added.
-	 * @param description The description of the effect to apply.
+	 * @param playerName The name of the player whose the audio stream shall be modified.
+	 * @param index      The index at which the effect shall be added.
+	 * @param effect     The effect to apply.
 	 */
-	public PlayerAudioStreamAddEffectRequest(String playerName, byte index, EffectDescription description) {
+	public PlayerAudioStreamAddEffectRequest(String playerName, byte index, Effect effect) {
 		this.playerName = playerName;
 		this.index = index;
-		this.description = description;
+		this.effect = effect;
 	}
 
 	/**
@@ -39,8 +39,8 @@ public class PlayerAudioStreamAddEffectRequest {
 	/**
 	 * @return The description of the effect.
 	 */
-	public EffectDescription getDescription() {
-		return description;
+	public Effect getEffect() {
+		return effect;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class PlayerAudioStreamAddEffectRequest {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
 		joiner.add("playerName=" + getPlayerName());
 		joiner.add("index=" + getIndex());
-		joiner.add("description=" + getDescription());
+		joiner.add("effect=" + getEffect());
 		return joiner.toString();
 	}
 
@@ -65,9 +65,9 @@ public class PlayerAudioStreamAddEffectRequest {
 		if (index != other.getIndex())
 			return false;
 
-		if (description == null && other.getDescription() == null)
+		if (effect == null && other.getEffect() == null)
 			return true;
 
-		return description.equals(other.getDescription());
+		return effect.equals(other.getEffect());
 	}
 }

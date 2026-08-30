@@ -6,28 +6,28 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class EffectManager {
-	private Map<String, Supplier<EffectDescription>> descriptions;
+	private Map<String, Supplier<Effect>> effects;
 
 	/**
-	 * Creates an effect manager that gather effect descriptions to be shared between a client and a server.
+	 * Creates an effect manager that gather effects to be shared between a client and a server.
 	 */
 	public EffectManager() {
-		descriptions = new HashMap<String, Supplier<EffectDescription>>();
+		effects = new HashMap<String, Supplier<Effect>>();
 	}
 
 	/**
 	 * Register a object that contains the description of an effect.
 	 * 
 	 * @param name     The name of the effect.
-	 * @param supplier The object that creates the description of an effect.
+	 * @param supplier The object that creates the effect.
 	 * @return True if the parameters has been registered successfully, false otherwise.
 	 */
-	public boolean register(String name, Supplier<EffectDescription> supplier) {
-		Supplier<EffectDescription> registered = descriptions.get(name);
+	public boolean register(String name, Supplier<Effect> supplier) {
+		Supplier<Effect> registered = effects.get(name);
 		if (registered != null)
 			return false;
 
-		descriptions.put(name, supplier);
+		effects.put(name, supplier);
 		return true;
 	}
 
@@ -35,18 +35,24 @@ public class EffectManager {
 	 * Check if there is an effect description registered for the given effect name.
 	 * 
 	 * @param name   The name of the effect.
-	 * @param values The array that contains effect parameters value.
-	 * @return The description updated with the given values if registered, null otherwise.
+	 * @param values A map that gather effect parameter's name / parameter's value.
+	 * @return The effect updated with the given values if registered, null otherwise.
 	 */
-	public EffectDescription getEffectDescription(String name, Object... values) {
-		Supplier<EffectDescription> supplier = descriptions.get(name);
+	public Effect getEffect(String name, Map<String, Object> values) {
+		Supplier<Effect> supplier = effects.get(name);
 		if (supplier == null)
 			return null;
 
-		EffectDescription description = supplier.get();
+		Effect effect = supplier.get();
 		try {
-			description.setValues(values);
-			return description;
+			for (Map.Entry<String, Object> entry : values.entrySet()) {
+				EffectParameter parameter = effect.getParameter(entry.getKey());
+				if (parameter == null)
+					continue;
+
+				parameter.setValue(entry.getValue());
+			}
+			return effect;
 		} catch (Exception e) {
 			return null;
 		}
@@ -56,23 +62,20 @@ public class EffectManager {
 	 * Check if there is an effect description registered for the given effect name.
 	 * 
 	 * @param name The name of the effect.
-	 * @param data The bytes array that contains effect parameters value.
 	 * @return The description updated with the given bytes array if registered, null otherwise.
 	 */
-	public EffectDescription getEffectDescription(String name, byte[] data) {
-		Supplier<EffectDescription> supplier = descriptions.get(name);
+	public Effect getEffect(String name) {
+		Supplier<Effect> supplier = effects.get(name);
 		if (supplier == null)
 			return null;
 
-		EffectDescription p = supplier.get();
-		p.fromBytes(data);
-		return p;
+		return supplier.get();
 	}
 
 	/**
 	 * @return A list containing the name of each effect description registered for this manager.
 	 */
-	public List<String> getDescriptions() {
-		return descriptions.keySet().stream().toList();
+	public List<String> getEffects() {
+		return effects.keySet().stream().toList();
 	}
 }

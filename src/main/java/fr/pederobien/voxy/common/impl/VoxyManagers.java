@@ -1,11 +1,13 @@
 package fr.pederobien.voxy.common.impl;
 
+import java.util.Map;
+
 import fr.pederobien.protocol.impl.ProtocolManager;
 import fr.pederobien.protocol.interfaces.IProtocolManager;
-import fr.pederobien.voxy.common.impl.effects.EchoEffectDescription;
-import fr.pederobien.voxy.common.impl.effects.EffectDescription;
+import fr.pederobien.voxy.common.impl.effects.EchoEffect;
+import fr.pederobien.voxy.common.impl.effects.Effect;
 import fr.pederobien.voxy.common.impl.effects.EffectManager;
-import fr.pederobien.voxy.common.impl.effects.NoEffectDescription;
+import fr.pederobien.voxy.common.impl.effects.NoEffect;
 import fr.pederobien.voxy.common.impl.v10.ProtocolV10;
 
 public class VoxyManagers {
@@ -33,8 +35,8 @@ public class VoxyManagers {
 			ProtocolV10.update(INSTANCE.getProtocolManager().getOrCreate(1.0f));
 
 			// Adding native effects
-			INSTANCE.getEffectManager().register(NoEffectDescription.NAME, () -> new NoEffectDescription());
-			INSTANCE.getEffectManager().register(EchoEffectDescription.NAME, () -> new EchoEffectDescription());
+			INSTANCE.getEffectManager().register(NoEffect.NAME, () -> new NoEffect());
+			INSTANCE.getEffectManager().register(EchoEffect.NAME, () -> new EchoEffect());
 		}
 	}
 
@@ -62,22 +64,22 @@ public class VoxyManagers {
 	/**
 	 * Check if there is an effect description registered for the given effect name.
 	 * 
-	 * @param name   The name of the effect.
-	 * @param params The array that contains effect parameters value.
-	 * @return The description updated with the given values if registered, null otherwise.
-	 */
-	public static EffectDescription getEffectDescription(String effectName, Object... params) {
-		return instance().getEffectManager().getEffectDescription(effectName, params);
-	}
-
-	/**
-	 * Check if there is an effect description registered for the given effect name.
-	 * 
 	 * @param name The name of the effect.
 	 * @param data The bytes array that contains effect parameters value.
 	 * @return The description updated with the given bytes array if registered, null otherwise.
 	 */
-	public static EffectDescription getEffectDescription(String effectName, byte[] data) {
-		return instance().getEffectManager().getEffectDescription(effectName, data);
+	public static Effect getEffect(String effectName) {
+		return instance().getEffectManager().getEffect(effectName);
+	}
+
+	/**
+	 * Check if there is an effect registered for the given effect name.
+	 * 
+	 * @param effectName The name of the effect to retrieve.
+	 * @param values     A map that contains the values of the parameters of the effect.
+	 * @return The effect updated with the parameters updated if registered, null otherwise.
+	 */
+	public static Effect getEffect(String effectName, Map<String, Object> values) {
+		return instance().getEffectManager().getEffect(effectName, values);
 	}
 }

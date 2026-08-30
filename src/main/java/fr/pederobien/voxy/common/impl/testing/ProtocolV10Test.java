@@ -1,7 +1,9 @@
 package fr.pederobien.voxy.common.impl.testing;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.pederobien.protocol.interfaces.IProtocol;
 import fr.pederobien.protocol.interfaces.IRequest;
@@ -10,8 +12,8 @@ import fr.pederobien.utils.event.Logger;
 import fr.pederobien.voxy.common.impl.VoxyErrors;
 import fr.pederobien.voxy.common.impl.VoxyIdentifiers;
 import fr.pederobien.voxy.common.impl.VoxyManagers;
-import fr.pederobien.voxy.common.impl.effects.EchoEffectDescription;
-import fr.pederobien.voxy.common.impl.effects.EffectDescription;
+import fr.pederobien.voxy.common.impl.effects.EchoEffect;
+import fr.pederobien.voxy.common.impl.effects.Effect;
 import fr.pederobien.voxy.common.impl.requests.AcknowledgementRequest;
 import fr.pederobien.voxy.common.impl.requests.AddRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomPendingRequest;
@@ -814,9 +816,14 @@ public class ProtocolV10Test {
 
 	public void playerAudioStreamAddEffectRequestTest() {
 		IExecutable test = () -> {
-			String effectName = EchoEffectDescription.NAME;
-			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
-			PlayerAudioStreamAddEffectRequest payload = new PlayerAudioStreamAddEffectRequest("Player 1", (byte) 0, parameters);
+			String effectName = EchoEffect.NAME;
+			Map<String, Object> values = new HashMap<String, Object>();
+			values.put(EchoEffect.DELAY, 200);
+			values.put(EchoEffect.FEEDBACK, 0.2f);
+			values.put(EchoEffect.GAIN, 0.2f);
+			Effect echo = VoxyManagers.getEffect(effectName, values);
+
+			PlayerAudioStreamAddEffectRequest payload = new PlayerAudioStreamAddEffectRequest("Player 1", (byte) 0, echo);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_ADD_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported
@@ -864,7 +871,7 @@ public class ProtocolV10Test {
 
 	public void playerAudioStreamRemoveEffectRequestTest() {
 		IExecutable test = () -> {
-			String effectName = EchoEffectDescription.NAME;
+			String effectName = EchoEffect.NAME;
 			PlayerAudioStreamRemoveEffectRequest payload = new PlayerAudioStreamRemoveEffectRequest("Player 1", effectName);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_REMOVE_EFFECT, VoxyErrors.NO_ERROR, payload);
 
@@ -913,9 +920,14 @@ public class ProtocolV10Test {
 
 	public void playerAudioStreamUpdateEffectRequestTest() {
 		IExecutable test = () -> {
-			String effectName = EchoEffectDescription.NAME;
-			EffectDescription parameters = VoxyManagers.getEffectDescription(effectName, 200, 0.2f, 0.2f);
-			PlayerAudioStreamUpdateEffectRequest payload = new PlayerAudioStreamUpdateEffectRequest("Player 1", parameters);
+			String effectName = EchoEffect.NAME;
+			Map<String, Object> values = new HashMap<String, Object>();
+			values.put(EchoEffect.DELAY, 200);
+			values.put(EchoEffect.FEEDBACK, 0.2f);
+			values.put(EchoEffect.GAIN, 0.2f);
+			Effect echo = VoxyManagers.getEffect(effectName, values);
+
+			PlayerAudioStreamUpdateEffectRequest payload = new PlayerAudioStreamUpdateEffectRequest("Player 1", echo);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_UPDATE_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported

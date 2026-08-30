@@ -2,21 +2,21 @@ package fr.pederobien.voxy.common.impl.requests;
 
 import java.util.StringJoiner;
 
-import fr.pederobien.voxy.common.impl.effects.EffectDescription;
+import fr.pederobien.voxy.common.impl.effects.Effect;
 
 public class PlayerAudioStreamUpdateEffectRequest {
 	private final String playerName;
-	private final EffectDescription description;
+	private final Effect effect;
 
 	/**
 	 * Creates a request in order to modify the parameters of an effect.
 	 * 
-	 * @param playerName  The name of the player whose the audio stream shall be modified.
-	 * @param description The description of the effect to apply.
+	 * @param playerName The name of the player whose the audio stream shall be modified.
+	 * @param effect     The effect whose the parameters shall be updated.
 	 */
-	public PlayerAudioStreamUpdateEffectRequest(String playerName, EffectDescription description) {
+	public PlayerAudioStreamUpdateEffectRequest(String playerName, Effect effect) {
 		this.playerName = playerName;
-		this.description = description;
+		this.effect = effect;
 	}
 
 	/**
@@ -29,15 +29,15 @@ public class PlayerAudioStreamUpdateEffectRequest {
 	/**
 	 * @return The description of the effect.
 	 */
-	public EffectDescription getDescription() {
-		return description;
+	public Effect getEffect() {
+		return effect;
 	}
 
 	@Override
 	public String toString() {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
 		joiner.add("playerName=" + getPlayerName());
-		joiner.add("description=" + getDescription());
+		joiner.add("effect=" + getEffect());
 		return joiner.toString();
 	}
 
@@ -51,9 +51,9 @@ public class PlayerAudioStreamUpdateEffectRequest {
 		if (!playerName.equals(other.getPlayerName()))
 			return false;
 
-		if (description == null && other.getDescription() == null)
+		if (effect == null && other.getEffect() == null)
 			return true;
 
-		return description.equals(other.getDescription());
+		return effect.equals(other.getEffect());
 	}
 }
