@@ -8,7 +8,7 @@ public class EchoEffect extends Effect {
 	/**
 	 * The name of this effect.
 	 */
-	public static final String NAME = "ECHO";
+	public static final String NAME = "ECHO_EFFECT";
 
 	/**
 	 * Name of the delay parameter. The value data type shall be Integer.
