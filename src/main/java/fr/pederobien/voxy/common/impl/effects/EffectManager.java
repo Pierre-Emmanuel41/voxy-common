@@ -16,11 +16,11 @@ public class EffectManager {
 	}
 
 	/**
-	 * Register a object that contains the description of an effect.
+	 * Register an effect supplier associated to an effect name.
 	 * 
 	 * @param name     The name of the effect.
 	 * @param supplier The object that creates the effect.
-	 * @return True if the parameters has been registered successfully, false otherwise.
+	 * @return True if the supplier has been registered successfully, false otherwise.
 	 */
 	public boolean register(String name, Supplier<Effect> supplier) {
 		Supplier<Effect> registered = effects.get(name);
@@ -32,9 +32,9 @@ public class EffectManager {
 	}
 
 	/**
-	 * Check if there is an effect description registered for the given effect name.
+	 * Check if there is a supplier registered for the given effect name.
 	 * 
-	 * @param name   The name of the effect.
+	 * @param name   The name of the effect to create
 	 * @param values A map that gather effect parameter's name / parameter's value.
 	 * @return The effect updated with the given values if registered, null otherwise.
 	 */
@@ -59,10 +59,10 @@ public class EffectManager {
 	}
 
 	/**
-	 * Check if there is an effect description registered for the given effect name.
+	 * Check if there is a supplier registered for the given effect name.
 	 * 
 	 * @param name The name of the effect.
-	 * @return The description updated with the given bytes array if registered, null otherwise.
+	 * @return An effect if a supplier is registered, null otherwise.
 	 */
 	public Effect getEffect(String name) {
 		Supplier<Effect> supplier = effects.get(name);
@@ -73,7 +73,7 @@ public class EffectManager {
 	}
 
 	/**
-	 * @return A list containing the name of each effect description registered for this manager.
+	 * @return A list containing the name of each effect registered for this manager.
 	 */
 	public List<String> getEffects() {
 		return effects.keySet().stream().toList();
