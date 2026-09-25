@@ -14,4 +14,9 @@ public class ShortValueConverter implements IValueConverter {
 	public Object fromBytes(byte[] data) {
 		return ReadableByteWrapper.wrap(data).nextShort();
 	}
+
+	@Override
+	public Object fromString(String value) {
+		return Short.parseShort(value);
+	}
 }

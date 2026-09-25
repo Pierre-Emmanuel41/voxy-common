@@ -14,4 +14,9 @@ public class ByteValueConverter implements IValueConverter {
 	public Object fromBytes(byte[] data) {
 		return ReadableByteWrapper.wrap(data).next();
 	}
+
+	@Override
+	public Object fromString(String value) {
+		return Byte.parseByte(value);
+	}
 }

@@ -14,4 +14,9 @@ public class DoubleValueConverter implements IValueConverter {
 	public Object fromBytes(byte[] data) {
 		return ReadableByteWrapper.wrap(data).nextDouble();
 	}
+
+	@Override
+	public Object fromString(String value) {
+		return Double.parseDouble(value);
+	}
 }

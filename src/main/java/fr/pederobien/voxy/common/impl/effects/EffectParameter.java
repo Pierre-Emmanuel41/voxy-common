@@ -31,6 +31,13 @@ public class EffectParameter {
 	}
 
 	/**
+	 * @return The data type of the value.
+	 */
+	public Class<?> getValueDataType() {
+		return clazz;
+	}
+
+	/**
 	 * @return The value of the parameter.
 	 */
 	public Object getValue() {
@@ -65,6 +72,15 @@ public class EffectParameter {
 	 */
 	public void fromBytes(byte[] data) {
 		value = converter.fromBytes(data);
+	}
+
+	/**
+	 * Parse the input string to retrieve the value.
+	 * 
+	 * @param value The string representation of the value.
+	 */
+	public void fromString(String value) {
+		this.value = converter.fromString(value);
 	}
 
 	@Override

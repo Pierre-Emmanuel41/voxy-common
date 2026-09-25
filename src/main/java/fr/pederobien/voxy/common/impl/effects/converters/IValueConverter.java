@@ -17,4 +17,12 @@ public interface IValueConverter {
 	 * @return The value of the parameter.
 	 */
 	public Object fromBytes(byte[] data);
+
+	/**
+	 * Parse the input string to retrieve the value.
+	 * 
+	 * @param value The value to parse.
+	 * @return The value of the parameter.
+	 */
+	public Object fromString(String value);
 }

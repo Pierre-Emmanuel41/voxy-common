@@ -14,4 +14,9 @@ public class FloatValueConverter implements IValueConverter {
 	public Object fromBytes(byte[] data) {
 		return ReadableByteWrapper.wrap(data).nextFloat();
 	}
+
+	@Override
+	public Object fromString(String value) {
+		return Float.parseFloat(value);
+	}
 }

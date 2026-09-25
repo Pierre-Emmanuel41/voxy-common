@@ -14,4 +14,9 @@ public class LongValueConverter implements IValueConverter {
 	public Object fromBytes(byte[] data) {
 		return ReadableByteWrapper.wrap(data).nextLong();
 	}
+
+	@Override
+	public Object fromString(String value) {
+		return Long.parseLong(value);
+	}
 }
