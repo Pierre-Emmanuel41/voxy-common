@@ -3,6 +3,19 @@ package fr.pederobien.voxy.common.impl.effects.converters;
 public interface IValueConverter {
 
 	/**
+	 * @return The data type of the value.
+	 */
+	Class<?> getValueDataType();
+
+	/**
+	 * Checks if the input value is valid. The method shall throw an exception if the data type is incorrect.
+	 * 
+	 * @param name  The parameter's name.
+	 * @param value The value to validate.
+	 */
+	void validate(String name, Object value);
+
+	/**
 	 * Convert the input value to bytes array.
 	 * 
 	 * @param The value of the parameter.

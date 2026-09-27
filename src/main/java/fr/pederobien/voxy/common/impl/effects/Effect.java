@@ -92,11 +92,23 @@ public class Effect {
 	/**
 	 * Add a parameter to the underlying list of parameters.
 	 * 
-	 * @param name      The name of the parameter.
-	 * @param clazz     The data type of the parameter.
-	 * @param converter The converter to use for bytes array generation/parsing.
+	 * @param name        The name of the parameter.
+	 * @param constraints An explanation about the constraints the parameter's value shall meet.
+	 * @param unit        The unit of the parameter.
+	 * @param converter   The converter to use for bytes array generation/parsing.
 	 */
-	protected void add(String name, Class<?> clazz, IValueConverter converter) {
-		parameters.add(new EffectParameter(name, clazz, converter));
+	protected void add(String name, String constraints, String unit, IValueConverter converter) {
+		parameters.add(new EffectParameter(name, constraints, unit, converter));
+	}
+
+	/**
+	 * Add a parameter to the underlying list of parameters.
+	 * 
+	 * @param name        The name of the parameter.
+	 * @param constraints An explanation about the constraints the parameter's value shall meet.
+	 * @param converter   The converter to use for bytes array generation/parsing.
+	 */
+	protected void add(String name, String constraints, IValueConverter converter) {
+		parameters.add(new EffectParameter(name, constraints, converter));
 	}
 }
