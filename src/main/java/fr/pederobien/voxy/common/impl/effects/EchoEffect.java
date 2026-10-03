@@ -27,7 +27,7 @@ public class EchoEffect extends Effect {
 	public static final String GAIN = "gain";
 
 	/**
-	 * Creates a ECHO effect.
+	 * Creates a ECHO_EFFECT effect.
 	 */
 	public EchoEffect() {
 		super(NAME);
