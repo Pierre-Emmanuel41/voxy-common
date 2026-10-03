@@ -7,6 +7,7 @@ import fr.pederobien.protocol.interfaces.IProtocolManager;
 import fr.pederobien.voxy.common.impl.effects.EchoEffect;
 import fr.pederobien.voxy.common.impl.effects.Effect;
 import fr.pederobien.voxy.common.impl.effects.EffectManager;
+import fr.pederobien.voxy.common.impl.effects.HelmetEffect;
 import fr.pederobien.voxy.common.impl.effects.NoEffect;
 import fr.pederobien.voxy.common.impl.v10.ProtocolV10;
 
@@ -37,6 +38,7 @@ public class VoxyManagers {
 			// Adding native effects
 			INSTANCE.getEffectManager().register(NoEffect.NAME, () -> new NoEffect());
 			INSTANCE.getEffectManager().register(EchoEffect.NAME, () -> new EchoEffect());
+			INSTANCE.getEffectManager().register(HelmetEffect.NAME, () -> new HelmetEffect());
 		}
 	}
 
