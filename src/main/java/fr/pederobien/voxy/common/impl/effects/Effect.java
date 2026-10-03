@@ -72,7 +72,7 @@ public class Effect {
 		for (EffectParameter parameter : parameters)
 			paramJoiner.add(String.format("%s=%s", parameter.getName(), parameter.getValue()));
 
-		joiner.add(paramJoiner.toString());
+		joiner.add("parameters=" + paramJoiner.toString());
 		return joiner.toString();
 	}
 
