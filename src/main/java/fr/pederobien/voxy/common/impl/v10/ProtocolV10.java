@@ -25,6 +25,7 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.JOIN_ROOM_PENDING, new JoinRoomPendingWrapper());
 		protocol.register(VoxyIdentifiers.JOIN_ROOM, new JoinRoomWrapper());
 		protocol.register(VoxyIdentifiers.LEAVE_ROOM, new LeaveRoomWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_PLAYBACK, new PlayerPlaybackWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_MUTE, new PlayerMuteWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_MUTE_BY, new PlayerMuteByWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_DEAF, new PlayerDeafWrapper());

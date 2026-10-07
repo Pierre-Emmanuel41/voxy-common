@@ -38,6 +38,8 @@ public class VoxyProtocolManagerTestApp {
 		test.joinRoomRequestWrongDataTypeTest();
 		test.leaveRoomRequestTest();
 		test.leaveRoomRequestWrongDataTypeTest();
+		test.playerPlaybackRequestTest();
+		test.playerPlaybackRequestWrongPayloadDatatypeTest();
 		test.playerMuteRequestTest();
 		test.playerMuteRequestWrongPayloadDatatypeTest();
 		test.playerMuteByRequestTest();

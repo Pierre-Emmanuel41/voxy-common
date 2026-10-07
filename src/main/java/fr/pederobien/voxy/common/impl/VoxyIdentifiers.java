@@ -50,6 +50,11 @@ public enum VoxyIdentifiers implements IIdentifier {
 	LEAVE_ROOM("Leave a room"),
 
 	/**
+	 * Identifier to change the playback status of a player.
+	 */
+	PLAYER_PLAYBACK("Change the player's playback status"),
+
+	/**
 	 * Identifier to change the mute status of a player.
 	 */
 	PLAYER_MUTE("Change the player's mute status"),

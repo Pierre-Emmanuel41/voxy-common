@@ -28,6 +28,7 @@ import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamVolumesRequest.V
 import fr.pederobien.voxy.common.impl.requests.PlayerDeafRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteByRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerMuteRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerPlaybackRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerPropertiesRequest;
 import fr.pederobien.voxy.common.impl.requests.RemoveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.RenameRoomRequest;
@@ -575,6 +576,53 @@ public class ProtocolV10Test {
 		};
 
 		runTest("leaveRoomRequestWrongDataTypeTest", test);
+	}
+
+	public void playerPlaybackRequestTest() {
+		IExecutable test = () -> {
+			PlayerPlaybackRequest payload = new PlayerPlaybackRequest("Player 1", true);
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_PLAYBACK, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to modify the playback status of a player");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to modify the playback status of a player");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerPlaybackRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerPlaybackRequestTest", test);
+	}
+
+	public void playerPlaybackRequestWrongPayloadDatatypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_PLAYBACK, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+					Logger.error("PlayerPlaybackWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerPlaybackWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+		};
+
+		runTest("playerPlaybackRequestWrongPayloadDatatypeTest", test);
 	}
 
 	public void playerMuteRequestTest() {
