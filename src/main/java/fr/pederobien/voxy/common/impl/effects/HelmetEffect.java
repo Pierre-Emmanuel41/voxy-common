@@ -21,6 +21,11 @@ public class HelmetEffect extends Effect {
 	public static final String QUALITY_FACTOR = "factor";
 
 	/**
+	 * The gain to apply on the output audio stream.
+	 */
+	public static final String GAIN = "gain";
+
+	/**
 	 * Creates a HELMET_EFFECT effect.
 	 */
 	public HelmetEffect() {
@@ -28,5 +33,6 @@ public class HelmetEffect extends Effect {
 
 		add(FREQUENCY, "The value shall be in range [500, 3000]", "Hz", new FloatValueConverter(Range.of(500.0f, 3000.0f)));
 		add(QUALITY_FACTOR, "The value shall be in range [0.5, 3]", "", new FloatValueConverter(Range.of(0.5f, 3.0f)));
+		add(GAIN, "The value shall be in range [0, 1]", "", new FloatValueConverter(Range.of(0.0f, 1.0f)));
 	}
 }
