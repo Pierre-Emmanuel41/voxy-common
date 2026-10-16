@@ -4,21 +4,18 @@ import java.util.StringJoiner;
 
 import fr.pederobien.voxy.common.impl.effects.Effect;
 
-public class PlayerAudioStreamAddEffectRequest {
+public class PlayerAudioStreamAddOrUpdateEffectRequest {
 	private final String playerName;
-	private final byte index;
 	private final Effect effect;
 
 	/**
 	 * Creates a request in order to add an effect on the audio stream of a player.
 	 * 
 	 * @param playerName The name of the player whose the audio stream shall be modified.
-	 * @param index      The index at which the effect shall be added.
 	 * @param effect     The effect to apply.
 	 */
-	public PlayerAudioStreamAddEffectRequest(String playerName, byte index, Effect effect) {
+	public PlayerAudioStreamAddOrUpdateEffectRequest(String playerName, Effect effect) {
 		this.playerName = playerName;
-		this.index = index;
 		this.effect = effect;
 	}
 
@@ -27,13 +24,6 @@ public class PlayerAudioStreamAddEffectRequest {
 	 */
 	public String getPlayerName() {
 		return playerName;
-	}
-
-	/**
-	 * @return The index at which the effect shall be added.
-	 */
-	public byte getIndex() {
-		return index;
 	}
 
 	/**
@@ -47,22 +37,18 @@ public class PlayerAudioStreamAddEffectRequest {
 	public String toString() {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
 		joiner.add("playerName=" + getPlayerName());
-		joiner.add("index=" + getIndex());
 		joiner.add("effect=" + getEffect());
 		return joiner.toString();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof PlayerAudioStreamAddEffectRequest))
+		if (!(obj instanceof PlayerAudioStreamAddOrUpdateEffectRequest))
 			return false;
 
-		PlayerAudioStreamAddEffectRequest other = (PlayerAudioStreamAddEffectRequest) obj;
+		PlayerAudioStreamAddOrUpdateEffectRequest other = (PlayerAudioStreamAddOrUpdateEffectRequest) obj;
 
 		if (!playerName.equals(other.getPlayerName()))
-			return false;
-
-		if (index != other.getIndex())
 			return false;
 
 		if (effect == null && other.getEffect() == null)

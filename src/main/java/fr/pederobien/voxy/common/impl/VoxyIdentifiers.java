@@ -82,17 +82,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier to add an effect of the audio stream of a player.
 	 */
-	PLAYER_AUDIO_STREAM_ADD_EFFECT("Add an effect on the audio stream of a player"),
+	PLAYER_AUDIO_STREAM_ADD_OR_UPDATE_EFFECT("Add or update an effect on the audio stream of a player"),
 
 	/**
 	 * Identifier to remove an effect from the audio stream of a player.
 	 */
-	PLAYER_AUDIO_STREAM_REMOVE_EFFECT("Removes an effect from the audio stream of a player"),
-
-	/**
-	 * Identifier that indicates that the effect currently applied shall be updated.
-	 */
-	PLAYER_AUDIO_STREAM_UPDATE_EFFECT("Player's audio stream effect update");
+	PLAYER_AUDIO_STREAM_REMOVE_EFFECT("Removes an effect from the audio stream of a player");
 
 	private static int codeGenerator = 0;
 	private int code;
