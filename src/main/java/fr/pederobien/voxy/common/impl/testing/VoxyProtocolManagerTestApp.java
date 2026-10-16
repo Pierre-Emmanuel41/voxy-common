@@ -50,10 +50,12 @@ public class VoxyProtocolManagerTestApp {
 		test.playerAudioStreamContentRequestWrongPayloadDatatypeTest();
 		test.playerAudioStreamVolumesRequestTest();
 		test.playerAudioStreamVolumesRequestWrongPayloadDatatypeTest();
-		test.playerAudioStreamAddOrUpdateEffectRequestTest();
-		test.playerAudioStreamAddOrUpdateEffectRequestWrongDataTypeTest();
+		test.playerAudioStreamAddEffectRequestTest();
+		test.playerAudioStreamAddEffectRequestWrongDataTypeTest();
 		test.playerAudioStreamRemoveEffectRequestTest();
 		test.playerAudioStreamRemoveEffectRequestWrongDataTypeTest();
+		test.playerAudioStreamUpdateEffectRequestTest();
+		test.playerAudioStreamUpdateEffectRequestWrongDataTypeTest();
 	}
 
 	private static void runTest(String testName, IExecutable test) {

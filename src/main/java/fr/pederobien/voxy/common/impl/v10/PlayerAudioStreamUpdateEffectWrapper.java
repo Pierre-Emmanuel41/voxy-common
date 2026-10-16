@@ -6,16 +6,16 @@ import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.voxy.common.impl.VoxyManagers;
 import fr.pederobien.voxy.common.impl.effects.Effect;
 import fr.pederobien.voxy.common.impl.effects.EffectParameter;
-import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamAddOrUpdateEffectRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamUpdateEffectRequest;
 
-public class PlayerAudioStreamAddOrUpdateEffectWrapper implements IWrapper {
+public class PlayerAudioStreamUpdateEffectWrapper implements IWrapper {
 
 	@Override
 	public byte[] getBytes(Object payload) {
-		if (!(payload instanceof PlayerAudioStreamAddOrUpdateEffectRequest))
-			throw new IllegalArgumentException("[PlayerAudioStreamAddOrUpdateEffectWrapper] - The payload data type shall be PlayerAudioStreamAddEffectRequest");
+		if (!(payload instanceof PlayerAudioStreamUpdateEffectRequest))
+			throw new IllegalArgumentException("[PlayerAudioStreamUpdateEffectWrapper] - The payload data type shall be PlayerAudioStreamUpdateEffectRequest");
 
-		PlayerAudioStreamAddOrUpdateEffectRequest request = (PlayerAudioStreamAddOrUpdateEffectRequest) payload;
+		PlayerAudioStreamUpdateEffectRequest request = (PlayerAudioStreamUpdateEffectRequest) payload;
 		ByteWrapper wrapper = ByteWrapper.create();
 
 		// Name's length + player's name
@@ -89,6 +89,6 @@ public class PlayerAudioStreamAddOrUpdateEffectWrapper implements IWrapper {
 			parameter.fromBytes(wrapper.next(parameterValueLength));
 		}
 
-		return new PlayerAudioStreamAddOrUpdateEffectRequest(playerName, effect);
+		return new PlayerAudioStreamUpdateEffectRequest(playerName, effect);
 	}
 }
