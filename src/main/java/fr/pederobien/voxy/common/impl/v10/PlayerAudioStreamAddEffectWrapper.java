@@ -21,9 +21,6 @@ public class PlayerAudioStreamAddEffectWrapper implements IWrapper {
 		// Name's length + player's name
 		wrapper.putString(request.getPlayerName(), true);
 
-		// Effect's index
-		wrapper.put(request.getIndex());
-
 		// Name's length + effect's name
 		wrapper.putString(request.getEffect().getName(), true);
 
@@ -57,9 +54,6 @@ public class PlayerAudioStreamAddEffectWrapper implements IWrapper {
 
 		// Player's name
 		String playerName = wrapper.nextString(playerNameLength);
-
-		// Effect's index
-		byte index = wrapper.next();
 
 		// Name's length
 		int effectNameLength = wrapper.nextInt();
@@ -95,6 +89,6 @@ public class PlayerAudioStreamAddEffectWrapper implements IWrapper {
 			parameter.fromBytes(wrapper.next(parameterValueLength));
 		}
 
-		return new PlayerAudioStreamAddEffectRequest(playerName, index, effect);
+		return new PlayerAudioStreamAddEffectRequest(playerName, effect);
 	}
 }

@@ -871,7 +871,7 @@ public class ProtocolV10Test {
 			values.put(EchoEffect.GAIN, 0.2f);
 			Effect echo = VoxyManagers.getEffect(effectName, values);
 
-			PlayerAudioStreamAddEffectRequest payload = new PlayerAudioStreamAddEffectRequest("Player 1", (byte) 0, echo);
+			PlayerAudioStreamAddEffectRequest payload = new PlayerAudioStreamAddEffectRequest("Player 1", echo);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_ADD_EFFECT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported

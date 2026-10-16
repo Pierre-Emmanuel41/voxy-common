@@ -6,7 +6,6 @@ import fr.pederobien.voxy.common.impl.effects.Effect;
 
 public class PlayerAudioStreamAddEffectRequest {
 	private final String playerName;
-	private final byte index;
 	private final Effect effect;
 
 	/**
@@ -16,9 +15,8 @@ public class PlayerAudioStreamAddEffectRequest {
 	 * @param index      The index at which the effect shall be added.
 	 * @param effect     The effect to apply.
 	 */
-	public PlayerAudioStreamAddEffectRequest(String playerName, byte index, Effect effect) {
+	public PlayerAudioStreamAddEffectRequest(String playerName, Effect effect) {
 		this.playerName = playerName;
-		this.index = index;
 		this.effect = effect;
 	}
 
@@ -27,13 +25,6 @@ public class PlayerAudioStreamAddEffectRequest {
 	 */
 	public String getPlayerName() {
 		return playerName;
-	}
-
-	/**
-	 * @return The index at which the effect shall be added.
-	 */
-	public byte getIndex() {
-		return index;
 	}
 
 	/**
@@ -47,7 +38,6 @@ public class PlayerAudioStreamAddEffectRequest {
 	public String toString() {
 		StringJoiner joiner = new StringJoiner(",", "{", "}");
 		joiner.add("playerName=" + getPlayerName());
-		joiner.add("index=" + getIndex());
 		joiner.add("effect=" + getEffect());
 		return joiner.toString();
 	}
@@ -60,9 +50,6 @@ public class PlayerAudioStreamAddEffectRequest {
 		PlayerAudioStreamAddEffectRequest other = (PlayerAudioStreamAddEffectRequest) obj;
 
 		if (!playerName.equals(other.getPlayerName()))
-			return false;
-
-		if (index != other.getIndex())
 			return false;
 
 		if (effect == null && other.getEffect() == null)
