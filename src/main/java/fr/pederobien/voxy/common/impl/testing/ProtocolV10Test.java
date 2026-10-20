@@ -20,6 +20,7 @@ import fr.pederobien.voxy.common.impl.requests.JoinRoomPendingRequest;
 import fr.pederobien.voxy.common.impl.requests.JoinRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.LeaveRoomRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamAddEffectRequest;
+import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamClearEffectsRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamContentRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamRemoveEffectRequest;
 import fr.pederobien.voxy.common.impl.requests.PlayerAudioStreamUpdateEffectRequest;
@@ -1019,6 +1020,54 @@ public class ProtocolV10Test {
 		};
 
 		runTest("playerAudioStreamUpdateEffectRequestWrongDataTypeTest", test);
+	}
+
+	public void playerAudioStreamClearEffectsRequestTest() {
+		IExecutable test = () -> {
+			PlayerAudioStreamClearEffectsRequest payload = new PlayerAudioStreamClearEffectsRequest("Player 1");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CLEAR_EFFECTS, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request == null) {
+				Logger.error("The protocol 1.0 shall support the request to clear the effects on an audio stream");
+				return;
+			}
+
+			Logger.info("The protocol 1.0 supports the request to clear the effects on an audio stream");
+
+			// Step 2: Verifying bytes generation
+			IRequest parsed = VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+			if (!parsed.getPayload().equals(payload)) {
+				Logger.error("Failure to parse the payload");
+				return;
+			}
+
+			Logger.info("PlayerAudioStreamClearEffectsRequest bytes array generated and parsed successfully");
+		};
+
+		runTest("playerAudioStreamClearEffectsRequestTest", test);
+	}
+
+	public void playerAudioStreamClearEffectsRequestWrongDataTypeTest() {
+		IExecutable test = () -> {
+			RemoveRoomRequest payload = new RemoveRoomRequest("general");
+			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CLEAR_EFFECTS, VoxyErrors.NO_ERROR, payload);
+
+			// Step 1: Verifying the request is supported
+			if (request != null) {
+
+				// Step 2: Verifying bytes generation
+				try {
+					VoxyManagers.instance().getProtocolManager().parse(request.getBytes());
+					Logger.error("PlayerAudioStreamClearEffectsWrapper did not throw the IllegalArgumentException");
+				} catch (Exception e) {
+					Logger.info("PlayerAudioStreamClearEffectsWrapper threw an expected Exception: %s", e.getMessage());
+				}
+			}
+
+		};
+
+		runTest("playerAudioStreamClearEffectsRequestWrongDataTypeTest", test);
 	}
 
 	private void runTest(String testName, IExecutable test) {

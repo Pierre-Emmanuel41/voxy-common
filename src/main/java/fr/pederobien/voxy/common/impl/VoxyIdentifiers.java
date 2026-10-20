@@ -92,7 +92,12 @@ public enum VoxyIdentifiers implements IIdentifier {
 	/**
 	 * Identifier that indicates that the effect currently applied shall be updated.
 	 */
-	PLAYER_AUDIO_STREAM_UPDATE_EFFECT("Player's audio stream effect update");
+	PLAYER_AUDIO_STREAM_UPDATE_EFFECT("Update an effect currently applied on the audio stream of a player"),
+
+	/**
+	 * Identifier that indicates the all effects currently applied shall be removed.
+	 */
+	PLAYER_AUDIO_STREAM_CLEAR_EFFECTS("Clear all effects currently applied on the audio stream of a player");
 
 	private static int codeGenerator = 0;
 	private int code;

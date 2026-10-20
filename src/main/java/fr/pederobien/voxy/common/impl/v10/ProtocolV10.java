@@ -34,5 +34,6 @@ public class ProtocolV10 {
 		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_ADD_EFFECT, new PlayerAudioStreamAddEffectWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_REMOVE_EFFECT, new PlayerAudioStreamRemoveEffectWrapper());
 		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_UPDATE_EFFECT, new PlayerAudioStreamUpdateEffectWrapper());
+		protocol.register(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CLEAR_EFFECTS, new PlayerAudioStreamClearEffectsWrapper());
 	}
 }
