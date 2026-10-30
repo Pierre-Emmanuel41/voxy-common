@@ -769,7 +769,7 @@ public class ProtocolV10Test {
 
 	public void playerAudioStreamContentRequestTest() {
 		IExecutable test = () -> {
-			PlayerAudioStreamContentRequest payload = new PlayerAudioStreamContentRequest("Player 1", new byte[15], (byte) 1);
+			PlayerAudioStreamContentRequest payload = new PlayerAudioStreamContentRequest("Player 1", new byte[15], 0.4215f, (byte) 1);
 			IRequest request = getProtocolV10().get(VoxyIdentifiers.PLAYER_AUDIO_STREAM_CONTENT, VoxyErrors.NO_ERROR, payload);
 
 			// Step 1: Verifying the request is supported

@@ -24,6 +24,9 @@ public class PlayerAudioStreamContentWrapper implements IWrapper {
 		// Audio sample's data
 		wrapper.put(request.getSample());
 
+		// Audio energy
+		wrapper.putFloat(request.getLoudness());
+
 		// Algorithm code
 		wrapper.put(request.getAlgorithm());
 
@@ -46,10 +49,13 @@ public class PlayerAudioStreamContentWrapper implements IWrapper {
 		// Audio sample's data
 		byte[] sample = wrapper.next(dataSize);
 
+		// Audio loudness
+		float loudness = wrapper.nextFloat();
+
 		// Algorithm code
 		byte algorithm = wrapper.next();
 
-		return new PlayerAudioStreamContentRequest(name, sample, algorithm);
+		return new PlayerAudioStreamContentRequest(name, sample, loudness, algorithm);
 	}
 
 }
